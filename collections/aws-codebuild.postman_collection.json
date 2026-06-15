@@ -1,0 +1,402 @@
+{
+  "item": [
+    {
+      "id": "139de8af-90d5-4d0a-9c5b-02dc317cfc66",
+      "name": "Projects",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [],
+      "event": []
+    },
+    {
+      "id": "b6f82f8e-aabc-4b60-96f6-d07f20e4ed3f",
+      "name": "Builds",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [],
+      "event": []
+    },
+    {
+      "id": "4d6b15df-b6af-4b2a-b13b-2880c4049c61",
+      "name": "Build Batches",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [],
+      "event": []
+    },
+    {
+      "id": "6e8b210b-f3a4-4246-83fc-ac1a0382df1e",
+      "name": "Report Groups",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [],
+      "event": []
+    },
+    {
+      "id": "d8c702b9-767c-40b2-ae48-ddfcdc954b19",
+      "name": "Reports",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [],
+      "event": []
+    },
+    {
+      "id": "d1bcce00-e9a4-4672-9fd6-c3b41369babd",
+      "name": "Webhooks",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [],
+      "event": []
+    },
+    {
+      "id": "56f7787a-b517-40bc-9589-1a1363bdec0a",
+      "name": "Source Credentials",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [],
+      "event": []
+    },
+    {
+      "id": "d8254a0d-4232-46fe-9a7b-b1fd8c45b298",
+      "name": "Fleets",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [],
+      "event": []
+    },
+    {
+      "id": "0828ecf0-fb93-49ec-b6d8-e0270f84daa2",
+      "name": "Sandboxes",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [],
+      "event": []
+    },
+    {
+      "id": "aa50fc46-745d-4c09-8c47-b317ce5c6738",
+      "name": "Resource Policies",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [],
+      "event": []
+    },
+    {
+      "id": "dc5bec3d-275b-473c-a283-bc67c482a043",
+      "name": "AWS CodeBuild JSON RPC entry point",
+      "request": {
+        "name": "AWS CodeBuild JSON RPC entry point",
+        "description": {
+          "content": "All CodeBuild operations are POST requests to the root path with the\noperation name specified in the `X-Amz-Target` header in the form\n`CodeBuild_20161006.<OperationName>`. The body is a JSON object\ncontaining the operation's input parameters.\n",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            ""
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": [
+            {
+              "description": {
+                "content": "",
+                "type": "text/plain"
+              },
+              "type": "any",
+              "value": "{{region}}",
+              "key": "region"
+            }
+          ]
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": "(Required) ",
+            "key": "X-Amz-Target",
+            "value": "<string>"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/x-amz-json-1.1"
+          },
+          {
+            "key": "Accept",
+            "value": "application/x-amz-json-1.1"
+          }
+        ],
+        "method": "POST",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"key_0\": \"string\",\n  \"key_1\": 5739.118675119571,\n  \"key_2\": 8914,\n  \"key_3\": 6064.0688449638965\n}"
+        }
+      },
+      "response": [
+        {
+          "id": "74edec7b-a2e8-40d6-9ec4-fb7aab1984f7",
+          "name": "Successful response",
+          "originalRequest": {
+            "url": {
+              "path": [
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{region}}",
+                  "key": "region"
+                }
+              ]
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: apikey",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "<API Key>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "X-Amz-Target",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "Content-Type",
+                "value": "application/x-amz-json-1.1"
+              },
+              {
+                "key": "Accept",
+                "value": "application/x-amz-json-1.1"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"key_0\": 9881,\n  \"key_1\": 2669\n}"
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/x-amz-json-1.1"
+            }
+          ],
+          "body": "",
+          "cookie": [],
+          "_postman_previewlanguage": "text"
+        },
+        {
+          "id": "31ad13ff-d058-416a-9c96-aae038128e21",
+          "name": "Client error",
+          "originalRequest": {
+            "url": {
+              "path": [
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{region}}",
+                  "key": "region"
+                }
+              ]
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: apikey",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "<API Key>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "X-Amz-Target",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "Content-Type",
+                "value": "application/x-amz-json-1.1"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"key_0\": 9881,\n  \"key_1\": 2669\n}"
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "text/plain"
+            }
+          ],
+          "body": "",
+          "cookie": [],
+          "_postman_previewlanguage": "text"
+        },
+        {
+          "id": "64cf0a5b-1c05-4baf-a9e0-69f99bdd341d",
+          "name": "Server error",
+          "originalRequest": {
+            "url": {
+              "path": [
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "{{region}}",
+                  "key": "region"
+                }
+              ]
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: apikey",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "<API Key>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "X-Amz-Target",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "Content-Type",
+                "value": "application/x-amz-json-1.1"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"key_0\": 9881,\n  \"key_1\": 2669\n}"
+            }
+          },
+          "status": "Internal Server Error",
+          "code": 500,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "text/plain"
+            }
+          ],
+          "body": "",
+          "cookie": [],
+          "_postman_previewlanguage": "text"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "us-east-1",
+      "key": "region"
+    },
+    {
+      "type": "string",
+      "value": "https://codebuild.{{region}}.amazonaws.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "51d62bb0-b2d0-4f6f-b8fa-033c81def669",
+    "name": "AWS CodeBuild API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "AWS CodeBuild is a fully managed continuous integration build service.\nThe CodeBuild API uses an AWS JSON 1.1 RPC protocol: all operations are\nPOST requests to the root path with the operation name specified in the\nX-Amz-Target header (e.g. `CodeBuild_20161006.StartBuild`). All requests\nare signed with AWS Signature Version 4 (SigV4).\n\nSee https://docs.aws.amazon.com/codebuild/latest/APIReference/Welcome.html\n",
+      "type": "text/plain"
+    }
+  }
+}

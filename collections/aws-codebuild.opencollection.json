@@ -1,0 +1,43 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AWS CodeBuild API",
+    "version": "2016-10-06"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "AWS CodeBuild JSON RPC entry point",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://codebuild.{region}.amazonaws.com/",
+        "headers": [
+          {
+            "name": "X-Amz-Target",
+            "value": ""
+          },
+          {
+            "name": "Content-Type",
+            "value": ""
+          }
+        ],
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "All CodeBuild operations are POST requests to the root path with the\noperation name specified in the `X-Amz-Target` header in the form\n`CodeBuild_20161006.<OperationName>`. The body is a JSON object\ncontaining the operation's input parameters.\n"
+    }
+  ],
+  "bundled": true
+}
