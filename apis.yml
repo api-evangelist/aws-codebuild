@@ -9,7 +9,7 @@ description: >-
   Signature Version 4 (SigV4) authentication and is accessed via SDKs, the AWS
   CLI, or direct HTTPS calls to regional service endpoints.
 type: Index
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
   - AWS
   - Build
