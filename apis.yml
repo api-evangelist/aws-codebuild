@@ -49,6 +49,14 @@ apis:
         url: https://docs.aws.amazon.com/codebuild/latest/userguide/getting-started.html
 
 common:
+  - type: TrustCenter
+    url: security/aws-codebuild-trust-center.yml
+  - type: VulnerabilityDisclosure
+    url: security/aws-codebuild-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/aws-codebuild-domain-security.yml
+  - type: Authentication
+    url: authentication/aws-codebuild-authentication.yml
   - type: Website
     url: https://aws.amazon.com/codebuild/
   - type: Documentation
