@@ -49,6 +49,8 @@ apis:
         url: https://docs.aws.amazon.com/codebuild/latest/userguide/getting-started.html
 
 common:
+  - type: AgenticAccess
+    url: agentic-access/aws-codebuild-agentic-access.yml
   - type: TrustCenter
     url: security/aws-codebuild-trust-center.yml
   - type: VulnerabilityDisclosure
