@@ -1,0 +1,144 @@
+openapi: 3.1.0
+info:
+  title: AWS CodeBuild AWS CodeBuild API API
+  version: '2016-10-06'
+  description: 'AWS CodeBuild is a fully managed continuous integration build service.
+
+    The CodeBuild API uses an AWS JSON 1.1 RPC protocol: all operations are
+
+    POST requests to the root path with the operation name specified in the
+
+    X-Amz-Target header (e.g. `CodeBuild_20161006.StartBuild`). All requests
+
+    are signed with AWS Signature Version 4 (SigV4).
+
+
+    See https://docs.aws.amazon.com/codebuild/latest/APIReference/Welcome.html
+
+    '
+servers:
+- url: https://codebuild.{region}.amazonaws.com
+  description: AWS CodeBuild regional endpoint
+  variables:
+    region:
+      default: us-east-1
+security:
+- SigV4: []
+tags:
+- name: AWS CodeBuild API
+paths:
+  /:
+    post:
+      summary: AWS CodeBuild JSON RPC entry point
+      description: 'All CodeBuild operations are POST requests to the root path with the
+
+        operation name specified in the `X-Amz-Target` header in the form
+
+        `CodeBuild_20161006.<OperationName>`. The body is a JSON object
+
+        containing the operation''s input parameters.
+
+        '
+      operationId: invokeAction
+      parameters:
+      - name: X-Amz-Target
+        in: header
+        required: true
+        schema:
+          type: string
+          enum:
+          - CodeBuild_20161006.CreateProject
+          - CodeBuild_20161006.UpdateProject
+          - CodeBuild_20161006.DeleteProject
+          - CodeBuild_20161006.BatchGetProjects
+          - CodeBuild_20161006.ListProjects
+          - CodeBuild_20161006.ListSharedProjects
+          - CodeBuild_20161006.UpdateProjectVisibility
+          - CodeBuild_20161006.InvalidateProjectCache
+          - CodeBuild_20161006.StartBuild
+          - CodeBuild_20161006.StopBuild
+          - CodeBuild_20161006.RetryBuild
+          - CodeBuild_20161006.BatchGetBuilds
+          - CodeBuild_20161006.ListBuilds
+          - CodeBuild_20161006.ListBuildsForProject
+          - CodeBuild_20161006.BatchDeleteBuilds
+          - CodeBuild_20161006.StartBuildBatch
+          - CodeBuild_20161006.StopBuildBatch
+          - CodeBuild_20161006.RetryBuildBatch
+          - CodeBuild_20161006.BatchGetBuildBatches
+          - CodeBuild_20161006.ListBuildBatches
+          - CodeBuild_20161006.ListBuildBatchesForProject
+          - CodeBuild_20161006.DeleteBuildBatch
+          - CodeBuild_20161006.CreateReportGroup
+          - CodeBuild_20161006.UpdateReportGroup
+          - CodeBuild_20161006.DeleteReportGroup
+          - CodeBuild_20161006.BatchGetReportGroups
+          - CodeBuild_20161006.ListReportGroups
+          - CodeBuild_20161006.ListSharedReportGroups
+          - CodeBuild_20161006.GetReportGroupTrend
+          - CodeBuild_20161006.BatchGetReports
+          - CodeBuild_20161006.ListReports
+          - CodeBuild_20161006.ListReportsForReportGroup
+          - CodeBuild_20161006.DeleteReport
+          - CodeBuild_20161006.DescribeCodeCoverages
+          - CodeBuild_20161006.DescribeTestCases
+          - CodeBuild_20161006.CreateWebhook
+          - CodeBuild_20161006.UpdateWebhook
+          - CodeBuild_20161006.DeleteWebhook
+          - CodeBuild_20161006.ImportSourceCredentials
+          - CodeBuild_20161006.DeleteSourceCredentials
+          - CodeBuild_20161006.ListSourceCredentials
+          - CodeBuild_20161006.CreateFleet
+          - CodeBuild_20161006.UpdateFleet
+          - CodeBuild_20161006.DeleteFleet
+          - CodeBuild_20161006.BatchGetFleets
+          - CodeBuild_20161006.ListFleets
+          - CodeBuild_20161006.StartSandbox
+          - CodeBuild_20161006.StopSandbox
+          - CodeBuild_20161006.BatchGetSandboxes
+          - CodeBuild_20161006.ListSandboxes
+          - CodeBuild_20161006.ListSandboxesForProject
+          - CodeBuild_20161006.StartSandboxConnection
+          - CodeBuild_20161006.StartCommandExecution
+          - CodeBuild_20161006.BatchGetCommandExecutions
+          - CodeBuild_20161006.ListCommandExecutionsForSandbox
+          - CodeBuild_20161006.PutResourcePolicy
+          - CodeBuild_20161006.GetResourcePolicy
+          - CodeBuild_20161006.DeleteResourcePolicy
+          - CodeBuild_20161006.ListCuratedEnvironmentImages
+      - name: Content-Type
+        in: header
+        required: true
+        schema:
+          type: string
+          enum:
+          - application/x-amz-json-1.1
+      requestBody:
+        required: true
+        content:
+          application/x-amz-json-1.1:
+            schema:
+              type: object
+              additionalProperties: true
+              description: Operation-specific JSON input
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/x-amz-json-1.1:
+              schema:
+                type: object
+                additionalProperties: true
+        '400':
+          description: Client error
+        '500':
+          description: Server error
+      tags:
+      - AWS CodeBuild API
+components:
+  securitySchemes:
+    SigV4:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: AWS Signature Version 4 signed Authorization header
