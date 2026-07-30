@@ -9,7 +9,19 @@ description: >-
   Signature Version 4 (SigV4) authentication and is accessed via SDKs, the AWS
   CLI, or direct HTTPS calls to regional service endpoints.
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/aws-codebuild.png
 tags:
   - AWS
   - Build
@@ -23,31 +35,22 @@ created: '2026-05-11'
 modified: '2026-05-11'
 specificationVersion: '0.19'
 apis:
-  - aid: aws-codebuild:codebuild-api
-    name: AWS CodeBuild API
-    description: >-
-      Programmatic interface for managing CodeBuild projects, build runs,
-      reports, source credentials, and webhooks. Requests are signed with AWS
-      Signature Version 4 and sent to regional CodeBuild endpoints
-      (codebuild.<region>.amazonaws.com).
-    humanURL: https://docs.aws.amazon.com/codebuild/latest/APIReference/Welcome.html
-    baseURL: https://codebuild.us-east-1.amazonaws.com
-    tags:
-      - AWS
-      - Build
-      - CI/CD
-      - Continuous Integration
-      - DevOps
-    properties:
-      - type: Documentation
-        url: https://docs.aws.amazon.com/codebuild/latest/APIReference/Welcome.html
-      - type: User Guide
-        url: https://docs.aws.amazon.com/codebuild/latest/userguide/welcome.html
-      - type: OpenAPI
-        url: openapi/aws-codebuild-openapi.yml
-      - type: GettingStarted
-        url: https://docs.aws.amazon.com/codebuild/latest/userguide/getting-started.html
-
+- aid: aws-codebuild:aws-codebuild-aws-codebuild-api-api
+  name: AWS CodeBuild AWS CodeBuild API API
+  description: The AWS CodeBuild API API from AWS CodeBuild — 1 operation(s) for aws codebuild api.
+  humanURL: https://docs.aws.amazon.com/codebuild/latest/APIReference/Welcome.html
+  baseURL: https://codebuild.us-east-1.amazonaws.com
+  tags:
+  - AWS CodeBuild API
+  properties:
+  - type: OpenAPI
+    url: openapi/aws-codebuild-aws-codebuild-api-api-openapi.yml
+  - type: Documentation
+    url: https://docs.aws.amazon.com/codebuild/latest/APIReference/Welcome.html
+  - type: User Guide
+    url: https://docs.aws.amazon.com/codebuild/latest/userguide/welcome.html
+  - type: GettingStarted
+    url: https://docs.aws.amazon.com/codebuild/latest/userguide/getting-started.html
 common:
   - type: AgenticAccess
     url: agentic-access/aws-codebuild-agentic-access.yml
