@@ -1,0 +1,14 @@
+{
+  "provider": "aws-codebuild",
+  "sources": [
+    "aws-codebuild-aws-codebuild-api-api-openapi.yml"
+  ],
+  "outputs": [
+    "aws-codebuild-aws-codebuild-api-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
