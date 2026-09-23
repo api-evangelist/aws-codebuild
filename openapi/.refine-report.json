@@ -1,7 +1,7 @@
 {
   "provider": "aws-codebuild",
   "sources": [
-    "aws-codebuild-aws-codebuild-api-api-openapi.yml"
+    "_original/aws-codebuild-openapi.yml"
   ],
   "outputs": [
     "aws-codebuild-aws-codebuild-api-api-openapi.yml"
@@ -10,8 +10,13 @@
   "errors": [],
   "warnings": [],
   "notes": [
-    "aws-codebuild-aws-codebuild-api-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "aws-codebuild-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "aws-codebuild-openapi.yml: tagged paths POST / -> AWS CodeBuild API",
+    "aws-codebuild-openapi.yml: declared missing tag: AWS CodeBuild API",
     "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "aws-codebuild-aws-codebuild-api-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

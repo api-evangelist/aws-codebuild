@@ -13,9 +13,7 @@ info:
     are signed with AWS Signature Version 4 (SigV4).
 
 
-    See https://docs.aws.amazon.com/codebuild/latest/APIReference/Welcome.html
-
-    '
+    See https://docs.aws.amazon.com/codebuild/latest/APIReference/Welcome.html'
 servers:
 - url: https://codebuild.{region}.amazonaws.com
   description: AWS CodeBuild regional endpoint
@@ -34,11 +32,9 @@ paths:
 
         operation name specified in the `X-Amz-Target` header in the form
 
-        `CodeBuild_20161006.<OperationName>`. The body is a JSON object
+        `CodeBuild_20161006.`. The body is a JSON object
 
-        containing the operation''s input parameters.
-
-        '
+        containing the operation''s input parameters.'
       operationId: invokeAction
       parameters:
       - name: X-Amz-Target
