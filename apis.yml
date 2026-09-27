@@ -68,6 +68,193 @@ apis:
     url: https://docs.aws.amazon.com/codebuild/latest/userguide/welcome.html
   - type: GettingStarted
     url: https://docs.aws.amazon.com/codebuild/latest/userguide/getting-started.html
+- aid: >-
+    aws-codebuild:aws-codebuild-aws-codebuild-x-amz-target-codebuild-20161006-deletereport-api
+  name: 'AWS CodeBuild AWS CodeBuild #X Amz Target=CodeBuild 20161006.DeleteReport… API'
+  description: >-
+    The AWS CodeBuild #X Amz Target=CodeBuild 20161006.DeleteReport… API from AWS CodeBuild — 1 operation(s)
+    for aws codebuild #x amz target=codebuild 20161006.deletereport….
+  humanURL: https://docs.aws.amazon.com/codebuild/latest/APIReference/Welcome.html
+  baseURL: https://codebuild.us-east-1.amazonaws.com
+  tags:
+  - 'AWS CodeBuild #X Amz Target=CodeBuild 20161006.DeleteReport…'
+  properties:
+  - type: OpenAPI
+    url: >-
+      openapi/aws-codebuild-aws-codebuild-x-amz-target-codebuild-20161006-deletereport-api-openapi.yml
+  - type: Documentation
+    url: https://docs.aws.amazon.com/codebuild/latest/userguide/welcome.html
+  - type: APIReference
+    url: https://docs.aws.amazon.com/codebuild/latest/APIReference/Welcome.html
+  - type: ErrorCatalog
+    url: errors/amazon-codebuild-problem-types.yml
+- aid: aws-codebuild:aws-codebuild-aws-codebuild-x-amz-target-codebuild-20161006-listbuilds-api
+  name: 'AWS CodeBuild AWS CodeBuild #X Amz Target=CodeBuild 20161006.ListBuilds… API'
+  description: >-
+    The AWS CodeBuild #X Amz Target=CodeBuild 20161006.ListBuilds… API from AWS CodeBuild — 1 operation(s)
+    for aws codebuild #x amz target=codebuild 20161006.listbuilds….
+  humanURL: https://docs.aws.amazon.com/codebuild/latest/APIReference/Welcome.html
+  baseURL: https://codebuild.us-east-1.amazonaws.com
+  tags:
+  - 'AWS CodeBuild #X Amz Target=CodeBuild 20161006.ListBuilds…'
+  properties:
+  - type: OpenAPI
+    url: >-
+      openapi/aws-codebuild-aws-codebuild-x-amz-target-codebuild-20161006-listbuilds-api-openapi.yml
+  - type: Documentation
+    url: https://docs.aws.amazon.com/codebuild/latest/userguide/welcome.html
+  - type: APIReference
+    url: https://docs.aws.amazon.com/codebuild/latest/APIReference/Welcome.html
+  - type: ErrorCatalog
+    url: errors/amazon-codebuild-problem-types.yml
+- aid: >-
+    aws-codebuild:aws-codebuild-aws-codebuild-x-amz-target-codebuild-20161006-listprojects-api
+  name: 'AWS CodeBuild AWS CodeBuild #X Amz Target=CodeBuild 20161006.ListProjects… API'
+  description: >-
+    The AWS CodeBuild #X Amz Target=CodeBuild 20161006.ListProjects… API from AWS CodeBuild — 1 operation(s)
+    for aws codebuild #x amz target=codebuild 20161006.listprojects….
+  humanURL: https://docs.aws.amazon.com/codebuild/latest/APIReference/Welcome.html
+  baseURL: https://codebuild.us-east-1.amazonaws.com
+  tags:
+  - 'AWS CodeBuild #X Amz Target=CodeBuild 20161006.ListProjects…'
+  properties:
+  - type: OpenAPI
+    url: >-
+      openapi/aws-codebuild-aws-codebuild-x-amz-target-codebuild-20161006-listprojects-api-openapi.yml
+  - type: Documentation
+    url: https://docs.aws.amazon.com/codebuild/latest/userguide/welcome.html
+  - type: APIReference
+    url: https://docs.aws.amazon.com/codebuild/latest/APIReference/Welcome.html
+  - type: ErrorCatalog
+    url: errors/amazon-codebuild-problem-types.yml
+- aid: >-
+    aws-codebuild:aws-codebuild-aws-codebuild-x-amz-target-codebuild-20161006-listreports-api
+  name: 'AWS CodeBuild AWS CodeBuild #X Amz Target=CodeBuild 20161006.ListReports… API'
+  description: >-
+    The AWS CodeBuild #X Amz Target=CodeBuild 20161006.ListReports… API from AWS CodeBuild — 1 operation(s)
+    for aws codebuild #x amz target=codebuild 20161006.listreports….
+  humanURL: https://docs.aws.amazon.com/codebuild/latest/APIReference/Welcome.html
+  baseURL: https://codebuild.us-east-1.amazonaws.com
+  tags:
+  - 'AWS CodeBuild #X Amz Target=CodeBuild 20161006.ListReports…'
+  properties:
+  - type: OpenAPI
+    url: >-
+      openapi/aws-codebuild-aws-codebuild-x-amz-target-codebuild-20161006-listreports-api-openapi.yml
+  - type: Documentation
+    url: https://docs.aws.amazon.com/codebuild/latest/userguide/welcome.html
+  - type: APIReference
+    url: https://docs.aws.amazon.com/codebuild/latest/APIReference/Welcome.html
+  - type: ErrorCatalog
+    url: errors/amazon-codebuild-problem-types.yml
+- aid: aws-codebuild:aws-codebuild-aws-codebuild-x-amz-target-codebuild-20161006-retrybuild-api
+  name: 'AWS CodeBuild AWS CodeBuild #X Amz Target=CodeBuild 20161006.RetryBuild… API'
+  description: >-
+    The AWS CodeBuild #X Amz Target=CodeBuild 20161006.RetryBuild… API from AWS CodeBuild — 1 operation(s)
+    for aws codebuild #x amz target=codebuild 20161006.retrybuild….
+  humanURL: https://docs.aws.amazon.com/codebuild/latest/APIReference/Welcome.html
+  baseURL: https://codebuild.us-east-1.amazonaws.com
+  tags:
+  - 'AWS CodeBuild #X Amz Target=CodeBuild 20161006.RetryBuild…'
+  properties:
+  - type: OpenAPI
+    url: >-
+      openapi/aws-codebuild-aws-codebuild-x-amz-target-codebuild-20161006-retrybuild-api-openapi.yml
+  - type: Documentation
+    url: https://docs.aws.amazon.com/codebuild/latest/userguide/welcome.html
+  - type: APIReference
+    url: https://docs.aws.amazon.com/codebuild/latest/APIReference/Welcome.html
+  - type: ErrorCatalog
+    url: errors/amazon-codebuild-problem-types.yml
+- aid: aws-codebuild:aws-codebuild-aws-codebuild-x-amz-target-codebuild-20161006-startbuild-api
+  name: 'AWS CodeBuild AWS CodeBuild #X Amz Target=CodeBuild 20161006.StartBuild… API'
+  description: >-
+    The AWS CodeBuild #X Amz Target=CodeBuild 20161006.StartBuild… API from AWS CodeBuild — 1 operation(s)
+    for aws codebuild #x amz target=codebuild 20161006.startbuild….
+  humanURL: https://docs.aws.amazon.com/codebuild/latest/APIReference/Welcome.html
+  baseURL: https://codebuild.us-east-1.amazonaws.com
+  tags:
+  - 'AWS CodeBuild #X Amz Target=CodeBuild 20161006.StartBuild…'
+  properties:
+  - type: OpenAPI
+    url: >-
+      openapi/aws-codebuild-aws-codebuild-x-amz-target-codebuild-20161006-startbuild-api-openapi.yml
+  - type: Documentation
+    url: https://docs.aws.amazon.com/codebuild/latest/userguide/welcome.html
+  - type: APIReference
+    url: https://docs.aws.amazon.com/codebuild/latest/APIReference/Welcome.html
+  - type: ErrorCatalog
+    url: errors/amazon-codebuild-problem-types.yml
+- aid: >-
+    aws-codebuild:aws-codebuild-aws-codebuild-x-amz-target-codebuild-20161006-stopbuild-api-api
+  name: 'AWS CodeBuild AWS CodeBuild #X Amz Target=CodeBuild 20161006.StopBuild API'
+  description: >-
+    The AWS CodeBuild #X Amz Target=CodeBuild 20161006.StopBuild API API from AWS CodeBuild — 1 operation(s)
+    for aws codebuild #x amz target=codebuild 20161006.stopbuild api.
+  humanURL: https://docs.aws.amazon.com/codebuild/latest/APIReference/Welcome.html
+  baseURL: https://codebuild.us-east-1.amazonaws.com
+  tags:
+  - 'AWS CodeBuild #X Amz Target=CodeBuild 20161006.StopBuild API'
+  properties:
+  - type: OpenAPI
+    url: >-
+      openapi/aws-codebuild-aws-codebuild-x-amz-target-codebuild-20161006-stopbuild-api-api-openapi.yml
+  - type: Documentation
+    url: https://docs.aws.amazon.com/codebuild/latest/userguide/welcome.html
+  - type: APIReference
+    url: https://docs.aws.amazon.com/codebuild/latest/APIReference/Welcome.html
+  - type: ErrorCatalog
+    url: errors/amazon-codebuild-problem-types.yml
+- aid: aws-codebuild:aws-codebuild-aws-codebuild-x-amz-target-codebuild-api
+  name: 'AWS CodeBuild AWS CodeBuild #X Amz Target=CodeBuild… API'
+  description: >-
+    The AWS CodeBuild #X Amz Target=CodeBuild… API from AWS CodeBuild — 38 operation(s) for aws codebuild
+    #x amz target=codebuild….
+  humanURL: https://docs.aws.amazon.com/codebuild/latest/APIReference/Welcome.html
+  baseURL: https://codebuild.us-east-1.amazonaws.com
+  tags:
+  - 'AWS CodeBuild #X Amz Target=CodeBuild…'
+  properties:
+  - type: OpenAPI
+    url: openapi/aws-codebuild-aws-codebuild-x-amz-target-codebuild-api-openapi.yml
+  - type: Documentation
+    url: https://docs.aws.amazon.com/codebuild/latest/userguide/welcome.html
+  - type: APIReference
+    url: https://docs.aws.amazon.com/codebuild/latest/APIReference/Welcome.html
+  - type: ErrorCatalog
+    url: errors/amazon-codebuild-problem-types.yml
+- aid: aws-codebuild:aws-codebuild-builds-api
+  name: AWS CodeBuild Builds API
+  description: Operations for starting, stopping, and viewing builds
+  humanURL: https://docs.aws.amazon.com/codebuild/latest/APIReference/Welcome.html
+  baseURL: https://codebuild.us-east-1.amazonaws.com
+  tags:
+  - Builds
+  properties:
+  - type: OpenAPI
+    url: openapi/aws-codebuild-builds-api-openapi.yml
+  - type: Documentation
+    url: https://docs.aws.amazon.com/codebuild/latest/userguide/welcome.html
+  - type: APIReference
+    url: https://docs.aws.amazon.com/codebuild/latest/APIReference/Welcome.html
+  - type: ErrorCatalog
+    url: errors/amazon-codebuild-problem-types.yml
+- aid: aws-codebuild:aws-codebuild-projects-api
+  name: AWS CodeBuild Projects API
+  description: Operations for creating and managing build projects
+  humanURL: https://docs.aws.amazon.com/codebuild/latest/APIReference/Welcome.html
+  baseURL: https://codebuild.us-east-1.amazonaws.com
+  tags:
+  - Projects
+  properties:
+  - type: OpenAPI
+    url: openapi/aws-codebuild-projects-api-openapi.yml
+  - type: Documentation
+    url: https://docs.aws.amazon.com/codebuild/latest/userguide/welcome.html
+  - type: APIReference
+    url: https://docs.aws.amazon.com/codebuild/latest/APIReference/Welcome.html
+  - type: ErrorCatalog
+    url: errors/amazon-codebuild-problem-types.yml
 common:
 - type: AgenticAccess
   url: agentic-access/aws-codebuild-agentic-access.yml
@@ -104,5 +291,5 @@ common:
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
-x-parent: aws
+x-parent: amazon-web-services
 x-relationship: product
