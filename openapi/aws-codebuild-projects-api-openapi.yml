@@ -225,10 +225,51 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
+    CreateProjectResponse:
+      type: object
+      properties:
+        project:
+          $ref: '#/components/schemas/Project'
     ResourceAlreadyExistsException:
       type: object
       properties:
         message:
+          type: string
+    InternalServerException:
+      type: object
+      properties:
+        message:
+          type: string
+    InvalidInputException:
+      type: object
+      properties:
+        message:
+          type: string
+    ListProjectsResponse:
+      type: object
+      properties:
+        projects:
+          type: array
+          items:
+            type: string
+        nextToken:
+          type: string
+    Project:
+      type: object
+      properties:
+        name:
+          type: string
+        arn:
+          type: string
+        description:
+          type: string
+        created:
+          type: string
+          format: date-time
+        lastModified:
+          type: string
+          format: date-time
+        serviceRole:
           type: string
     CreateProjectRequest:
       type: object
@@ -307,47 +348,6 @@ components:
         timeoutInMinutes:
           type: integer
           description: Build timeout in minutes.
-    CreateProjectResponse:
-      type: object
-      properties:
-        project:
-          $ref: '#/components/schemas/Project'
-    InternalServerException:
-      type: object
-      properties:
-        message:
-          type: string
-    ListProjectsResponse:
-      type: object
-      properties:
-        projects:
-          type: array
-          items:
-            type: string
-        nextToken:
-          type: string
-    Project:
-      type: object
-      properties:
-        name:
-          type: string
-        arn:
-          type: string
-        description:
-          type: string
-        created:
-          type: string
-          format: date-time
-        lastModified:
-          type: string
-          format: date-time
-        serviceRole:
-          type: string
-    InvalidInputException:
-      type: object
-      properties:
-        message:
-          type: string
 externalDocs:
   description: Amazon CodeBuild API Reference
   url: https://docs.aws.amazon.com/codebuild/latest/APIReference/

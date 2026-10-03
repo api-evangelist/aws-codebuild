@@ -6001,9 +6001,10 @@ paths:
       description: The AWS CodeBuild endpoint for China (Beijing) and China (Ningxia)
 components:
   schemas:
-    NonEmptyString:
-      type: string
-      minLength: 1
+    BuildsNotDeleted:
+      type: array
+      items:
+        $ref: '#/components/schemas/BuildNotDeleted'
     BatchDeleteBuildsInput:
       type: object
       required:
@@ -6037,12 +6038,9 @@ components:
           allOf:
           - $ref: '#/components/schemas/BuildsNotDeleted'
           - description: Information about any builds that could not be successfully deleted.
-    BuildsNotDeleted:
-      type: array
-      items:
-        $ref: '#/components/schemas/BuildNotDeleted'
-    String:
+    NonEmptyString:
       type: string
+      minLength: 1
     BuildIds:
       type: array
       items:
@@ -6050,88 +6048,32 @@ components:
       minItems: 1
       maxItems: 100
     InvalidInputException: {}
-    BuildStatusConfig:
-      type: object
-      properties:
-        context:
-          allOf:
-          - $ref: '#/components/schemas/String'
-          - description: <p>Specifies the context of the build status CodeBuild sends to the source provider. The usage of this parameter depends on the source provider.</p> <dl> <dt>Bitbucket</dt> <dd> <p>This parameter is used for the <code>name</code> parameter in the Bitbucket commit status. For more information, see <a href="https://developer.atlassian.com/bitbucket/api/2/reference/resource/repositories/%7Bworkspace%7D/%7Brepo_slug%7D/commit/%7Bnode%7D/statuses/build">build</a> in the Bitbucket API documentation.</p> </dd> <dt>GitHub/GitHub Enterprise Server</dt> <dd> <p>This parameter is used for the <code>context</code> parameter in the GitHub commit status. For more information, see <a href="https://developer.github.com/v3/repos/statuses/#create-a-commit-status">Create a commit status</a> in the GitHub developer guide.</p> </dd> </dl>
-        targetUrl:
-          allOf:
-          - $ref: '#/components/schemas/String'
-          - description: <p>Specifies the target url of the build status CodeBuild sends to the source provider. The usage of this parameter depends on the source provider.</p> <dl> <dt>Bitbucket</dt> <dd> <p>This parameter is used for the <code>url</code> parameter in the Bitbucket commit status. For more information, see <a href="https://developer.atlassian.com/bitbucket/api/2/reference/resource/repositories/%7Bworkspace%7D/%7Brepo_slug%7D/commit/%7Bnode%7D/statuses/build">build</a> in the Bitbucket API documentation.</p> </dd> <dt>GitHub/GitHub Enterprise Server</dt> <dd> <p>This parameter is used for the <code>target_url</code> parameter in the GitHub commit status. For more information, see <a href="https://developer.github.com/v3/repos/statuses/#create-a-commit-status">Create a commit status</a> in the GitHub developer guide.</p> </dd> </dl>
-      description: 'Contains information that defines how the CodeBuild build project reports the build status to the source provider. '
-    GitSubmodulesConfig:
-      type: object
-      required:
-      - fetchSubmodules
-      properties:
-        fetchSubmodules:
-          allOf:
-          - $ref: '#/components/schemas/WrapperBoolean'
-          - description: ' Set to true to fetch Git submodules for your CodeBuild build project. '
-      description: ' Information about the Git submodules configuration for an CodeBuild build project. '
-    EnvironmentType:
+    String:
+      type: string
+    BuildBatchPhaseType:
       type: string
       enum:
-      - WINDOWS_CONTAINER
-      - LINUX_CONTAINER
-      - LINUX_GPU_CONTAINER
-      - ARM_CONTAINER
-      - WINDOWS_SERVER_2019_CONTAINER
-    PhaseContext:
-      type: object
-      properties:
-        statusCode:
-          allOf:
-          - $ref: '#/components/schemas/String'
-          - description: The status code for the context of the build phase.
-        message:
-          allOf:
-          - $ref: '#/components/schemas/String'
-          - description: An explanation of the build phase's context. This might include a command ID and an exit code.
-      description: Additional information about a build phase that has an error. You can use this information for troubleshooting.
-    BatchGetBuildBatchesInput:
-      type: object
-      required:
-      - ids
-      title: BatchGetBuildBatchesInput
-      properties:
-        ids:
-          allOf:
-          - $ref: '#/components/schemas/BuildBatchIds'
-          - description: An array that contains the batch build identifiers to retrieve.
-    ProjectBuildBatchConfig:
-      type: object
-      properties:
-        serviceRole:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          - description: Specifies the service role ARN for the batch build project.
-        combineArtifacts:
-          allOf:
-          - $ref: '#/components/schemas/WrapperBoolean'
-          - description: Specifies if the build artifacts for the batch build should be combined into a single artifact location.
-        restrictions:
-          allOf:
-          - $ref: '#/components/schemas/BatchRestrictions'
-          - description: A <code>BatchRestrictions</code> object that specifies the restrictions for the batch build.
-        timeoutInMins:
-          allOf:
-          - $ref: '#/components/schemas/WrapperInt'
-          - description: Specifies the maximum amount of time, in minutes, that the batch build must be completed in.
-        batchReportMode:
-          allOf:
-          - $ref: '#/components/schemas/BatchReportModeType'
-          - description: <p>Specifies how build status reports are sent to the source provider for the batch build. This property is only used when the source provider for your project is Bitbucket, GitHub, or GitHub Enterprise, and your project is configured to report build statuses to the source provider.</p> <dl> <dt>REPORT_AGGREGATED_BATCH</dt> <dd> <p>(Default) Aggregate all of the build statuses into a single status report.</p> </dd> <dt>REPORT_INDIVIDUAL_BUILDS</dt> <dd> <p>Send a separate status report for each individual build.</p> </dd> </dl>
-      description: Contains configuration information about a batch build project.
-    CacheType:
+      - SUBMITTED
+      - DOWNLOAD_BATCHSPEC
+      - IN_PROGRESS
+      - COMBINE_ARTIFACTS
+      - SUCCEEDED
+      - FAILED
+      - STOPPED
+    BuildArtifactsList:
+      type: array
+      items:
+        $ref: '#/components/schemas/BuildArtifacts'
+      minItems: 0
+      maxItems: 12
+    ComputeTypesAllowed:
+      type: array
+      items:
+        $ref: '#/components/schemas/NonEmptyString'
+    SourceAuthType:
       type: string
       enum:
-      - NO_CACHE
-      - S3
-      - LOCAL
+      - OAUTH
     ProjectCache:
       type: object
       required:
@@ -6150,21 +6092,334 @@ components:
           - $ref: '#/components/schemas/ProjectCacheModes'
           - description: '<p>An array of strings that specify the local cache modes. You can use one or more local cache modes at the same time. This is only used for <code>LOCAL</code> cache types.</p> <p>Possible values are:</p> <dl> <dt>LOCAL_SOURCE_CACHE</dt> <dd> <p>Caches Git metadata for primary and secondary sources. After the cache is created, subsequent builds pull only the change between commits. This mode is a good choice for projects with a clean working directory and a source that is a large Git repository. If you choose this option and your project does not use a Git repository (GitHub, GitHub Enterprise, or Bitbucket), the option is ignored. </p> </dd> <dt>LOCAL_DOCKER_LAYER_CACHE</dt> <dd> <p>Caches existing Docker layers. This mode is a good choice for projects that build or pull large Docker images. It can prevent the performance issues caused by pulling large Docker images down from the network. </p> <note> <ul> <li> <p>You can use a Docker layer cache in the Linux environment only. </p> </li> <li> <p>The <code>privileged</code> flag must be set so that your project has the required Docker permissions. </p> </li> <li> <p>You should consider the security implications before you use a Docker layer cache. </p> </li> </ul> </note> </dd> <dt>LOCAL_CUSTOM_CACHE</dt> <dd> <p>Caches directories you specify in the buildspec file. This mode is a good choice if your build scenario is not suited to one of the other three local cache modes. If you use a custom cache: </p> <ul> <li> <p>Only directories can be specified for caching. You cannot specify individual files. </p> </li> <li> <p>Symlinks are used to reference cached directories. </p> </li> <li> <p>Cached directories are linked to your build before it downloads its project sources. Cached items are overridden if a source item has the same name. Directories are specified using cache paths in the buildspec file. </p> </li> </ul> </dd> </dl>'
       description: Information about the cache for the build project.
+    WrapperInt:
+      type: integer
     ImagePullCredentialsType:
       type: string
       enum:
       - CODEBUILD
       - SERVICE_ROLE
+    BuildBatchIds:
+      type: array
+      items:
+        $ref: '#/components/schemas/NonEmptyString'
+      minItems: 0
+      maxItems: 100
+    Boolean:
+      type: boolean
+    BuildBatchPhases:
+      type: array
+      items:
+        $ref: '#/components/schemas/BuildBatchPhase'
+    WrapperBoolean:
+      type: boolean
+    CloudWatchLogsConfig:
+      type: object
+      required:
+      - status
+      properties:
+        status:
+          allOf:
+          - $ref: '#/components/schemas/LogsConfigStatusType'
+          - description: '<p>The current status of the logs in CloudWatch Logs for a build project. Valid values are:</p> <ul> <li> <p> <code>ENABLED</code>: CloudWatch Logs are enabled for this build project.</p> </li> <li> <p> <code>DISABLED</code>: CloudWatch Logs are not enabled for this build project.</p> </li> </ul>'
+        groupName:
+          allOf:
+          - $ref: '#/components/schemas/String'
+          - description: ' The group name of the logs in CloudWatch Logs. For more information, see <a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/Working-with-log-groups-and-streams.html">Working with Log Groups and Log Streams</a>. '
+        streamName:
+          allOf:
+          - $ref: '#/components/schemas/String'
+          - description: ' The prefix of the stream name of the CloudWatch Logs. For more information, see <a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/Working-with-log-groups-and-streams.html">Working with Log Groups and Log Streams</a>. '
+      description: ' Information about CloudWatch Logs for a build project. '
+    ProjectSourceVersion:
+      type: object
+      required:
+      - sourceIdentifier
+      - sourceVersion
+      properties:
+        sourceIdentifier:
+          allOf:
+          - $ref: '#/components/schemas/String'
+          - description: 'An identifier for a source in the build project. The identifier can only contain alphanumeric characters and underscores, and must be less than 128 characters in length. '
+        sourceVersion:
+          allOf:
+          - $ref: '#/components/schemas/String'
+          - description: '<p>The source version for the corresponding source identifier. If specified, must be one of:</p> <ul> <li> <p>For CodeCommit: the commit ID, branch, or Git tag to use.</p> </li> <li> <p>For GitHub: the commit ID, pull request ID, branch name, or tag name that corresponds to the version of the source code you want to build. If a pull request ID is specified, it must use the format <code>pr/pull-request-ID</code> (for example, <code>pr/25</code>). If a branch name is specified, the branch''s HEAD commit ID is used. If not specified, the default branch''s HEAD commit ID is used.</p> </li> <li> <p>For Bitbucket: the commit ID, branch name, or tag name that corresponds to the version of the source code you want to build. If a branch name is specified, the branch''s HEAD commit ID is used. If not specified, the default branch''s HEAD commit ID is used.</p> </li> <li> <p>For Amazon S3: the version ID of the object that represents the build input ZIP file to use.</p> </li> </ul> <p> For more information, see <a href="https://docs.aws.amazon.com/codebuild/latest/userguide/sample-source-version.html">Source Version Sample with CodeBuild</a> in the <i>CodeBuild User Guide</i>. </p>'
+      description: ' A source identifier and its corresponding version. '
+    ArtifactsType:
+      type: string
+      enum:
+      - CODEPIPELINE
+      - S3
+      - NO_ARTIFACTS
+    CacheMode:
+      type: string
+      enum:
+      - LOCAL_DOCKER_LAYER_CACHE
+      - LOCAL_SOURCE_CACHE
+      - LOCAL_CUSTOM_CACHE
+    EnvironmentVariableType:
+      type: string
+      enum:
+      - PLAINTEXT
+      - PARAMETER_STORE
+      - SECRETS_MANAGER
+    SourceType:
+      type: string
+      enum:
+      - CODECOMMIT
+      - CODEPIPELINE
+      - GITHUB
+      - S3
+      - BITBUCKET
+      - GITHUB_ENTERPRISE
+      - NO_SOURCE
+    EnvironmentVariable:
+      type: object
+      required:
+      - name
+      - value
+      properties:
+        name:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          - description: The name or key of the environment variable.
+        value:
+          allOf:
+          - $ref: '#/components/schemas/String'
+          - description: <p>The value of the environment variable.</p> <important> <p>We strongly discourage the use of <code>PLAINTEXT</code> environment variables to store sensitive values, especially Amazon Web Services secret key IDs and secret access keys. <code>PLAINTEXT</code> environment variables can be displayed in plain text using the CodeBuild console and the CLI. For sensitive values, we recommend you use an environment variable of type <code>PARAMETER_STORE</code> or <code>SECRETS_MANAGER</code>. </p> </important>
+        type:
+          allOf:
+          - $ref: '#/components/schemas/EnvironmentVariableType'
+          - description: '<p>The type of environment variable. Valid values include:</p> <ul> <li> <p> <code>PARAMETER_STORE</code>: An environment variable stored in Systems Manager Parameter Store. To learn how to specify a parameter store environment variable, see <a href="https://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html#build-spec.env.parameter-store">env/parameter-store</a> in the <i>CodeBuild User Guide</i>.</p> </li> <li> <p> <code>PLAINTEXT</code>: An environment variable in plain text format. This is the default value.</p> </li> <li> <p> <code>SECRETS_MANAGER</code>: An environment variable stored in Secrets Manager. To learn how to specify a secrets manager environment variable, see <a href="https://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html#build-spec.env.secrets-manager">env/secrets-manager</a> in the <i>CodeBuild User Guide</i>.</p> </li> </ul>'
+      description: Information about an environment variable for a build project or a build.
+    VpcConfig:
+      type: object
+      properties:
+        vpcId:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          - description: The ID of the Amazon VPC.
+        subnets:
+          allOf:
+          - $ref: '#/components/schemas/Subnets'
+          - description: A list of one or more subnet IDs in your Amazon VPC.
+        securityGroupIds:
+          allOf:
+          - $ref: '#/components/schemas/SecurityGroupIds'
+          - description: A list of one or more security groups IDs in your Amazon VPC.
+      description: Information about the VPC configuration that CodeBuild accesses.
+    Subnets:
+      type: array
+      items:
+        $ref: '#/components/schemas/NonEmptyString'
+      maxItems: 16
     ProjectSecondarySourceVersions:
       type: array
       items:
         $ref: '#/components/schemas/ProjectSourceVersion'
       minItems: 0
       maxItems: 12
-    FileSystemType:
+    CacheType:
       type: string
       enum:
-      - EFS
+      - NO_CACHE
+      - S3
+      - LOCAL
+    ProjectCacheModes:
+      type: array
+      items:
+        $ref: '#/components/schemas/CacheMode'
+    BatchGetBuildBatchesInput:
+      type: object
+      required:
+      - ids
+      title: BatchGetBuildBatchesInput
+      properties:
+        ids:
+          allOf:
+          - $ref: '#/components/schemas/BuildBatchIds'
+          - description: An array that contains the batch build identifiers to retrieve.
+    Timestamp:
+      type: string
+      format: date-time
+    LogsConfig:
+      type: object
+      properties:
+        cloudWatchLogs:
+          allOf:
+          - $ref: '#/components/schemas/CloudWatchLogsConfig'
+          - description: ' Information about CloudWatch Logs for a build project. CloudWatch Logs are enabled by default. '
+        s3Logs:
+          allOf:
+          - $ref: '#/components/schemas/S3LogsConfig'
+          - description: ' Information about logs built to an S3 bucket for a build project. S3 logs are not enabled by default. '
+      description: ' Information about logs for a build project. These can be logs in CloudWatch Logs, built in a specified S3 bucket, or both. '
+    SourceAuth:
+      type: object
+      required:
+      - type
+      properties:
+        type:
+          allOf:
+          - $ref: '#/components/schemas/SourceAuthType'
+          - description: <note> <p> This data type is deprecated and is no longer accurate or used. </p> </note> <p>The authorization type to use. The only valid value is <code>OAUTH</code>, which represents the OAuth authorization type.</p>
+        resource:
+          allOf:
+          - $ref: '#/components/schemas/String'
+          - description: The resource value that applies to the specified authorization type.
+      description: <p>Information about the authorization settings for CodeBuild to access the source code to be built.</p> <p>This information is for the CodeBuild console's use only. Your code should not get or set this information directly.</p>
+    BuildSummaries:
+      type: array
+      items:
+        $ref: '#/components/schemas/BuildSummary'
+    S3LogsConfig:
+      type: object
+      required:
+      - status
+      properties:
+        status:
+          allOf:
+          - $ref: '#/components/schemas/LogsConfigStatusType'
+          - description: '<p>The current status of the S3 build logs. Valid values are:</p> <ul> <li> <p> <code>ENABLED</code>: S3 build logs are enabled for this build project.</p> </li> <li> <p> <code>DISABLED</code>: S3 build logs are not enabled for this build project.</p> </li> </ul>'
+        location:
+          allOf:
+          - $ref: '#/components/schemas/String'
+          - description: ' The ARN of an S3 bucket and the path prefix for S3 logs. If your Amazon S3 bucket name is <code>my-bucket</code>, and your path prefix is <code>build-log</code>, then acceptable formats are <code>my-bucket/build-log</code> or <code>arn:aws:s3:::my-bucket/build-log</code>. '
+        encryptionDisabled:
+          allOf:
+          - $ref: '#/components/schemas/WrapperBoolean'
+          - description: ' Set to true if you do not want your S3 build log output encrypted. By default S3 build logs are encrypted. '
+        bucketOwnerAccess:
+          $ref: '#/components/schemas/BucketOwnerAccess'
+      description: ' Information about S3 logs for a build project. '
+    RegistryCredential:
+      type: object
+      required:
+      - credential
+      - credentialProvider
+      properties:
+        credential:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          - description: <p> The Amazon Resource Name (ARN) or name of credentials created using Secrets Manager. </p> <note> <p> The <code>credential</code> can use the name of the credentials only if they exist in your current Amazon Web Services Region. </p> </note>
+        credentialProvider:
+          allOf:
+          - $ref: '#/components/schemas/CredentialProviderType'
+          - description: ' The service that created the credentials to access a private Docker registry. The valid value, SECRETS_MANAGER, is for Secrets Manager. '
+      description: '<p> Information about credentials that provide access to a private Docker registry. When this is set: </p> <ul> <li> <p> <code>imagePullCredentialsType</code> must be set to <code>SERVICE_ROLE</code>. </p> </li> <li> <p> images cannot be curated or an Amazon ECR image.</p> </li> </ul> <p> For more information, see <a href="https://docs.aws.amazon.com/codebuild/latest/userguide/sample-private-registry.html">Private Registry with Secrets Manager Sample for CodeBuild</a>. </p>'
+    StatusType:
+      type: string
+      enum:
+      - SUCCEEDED
+      - FAILED
+      - FAULT
+      - TIMED_OUT
+      - IN_PROGRESS
+      - STOPPED
+    SecurityGroupIds:
+      type: array
+      items:
+        $ref: '#/components/schemas/NonEmptyString'
+      maxItems: 5
+    PhaseContexts:
+      type: array
+      items:
+        $ref: '#/components/schemas/PhaseContext'
+    PhaseContext:
+      type: object
+      properties:
+        statusCode:
+          allOf:
+          - $ref: '#/components/schemas/String'
+          - description: The status code for the context of the build phase.
+        message:
+          allOf:
+          - $ref: '#/components/schemas/String'
+          - description: An explanation of the build phase's context. This might include a command ID and an exit code.
+      description: Additional information about a build phase that has an error. You can use this information for troubleshooting.
+    EnvironmentVariables:
+      type: array
+      items:
+        $ref: '#/components/schemas/EnvironmentVariable'
+    GitSubmodulesConfig:
+      type: object
+      required:
+      - fetchSubmodules
+      properties:
+        fetchSubmodules:
+          allOf:
+          - $ref: '#/components/schemas/WrapperBoolean'
+          - description: ' Set to true to fetch Git submodules for your CodeBuild build project. '
+      description: ' Information about the Git submodules configuration for an CodeBuild build project. '
+    ResolvedSecondaryArtifacts:
+      type: array
+      items:
+        $ref: '#/components/schemas/ResolvedArtifact'
+    ProjectSources:
+      type: array
+      items:
+        $ref: '#/components/schemas/ProjectSource'
+      minItems: 0
+      maxItems: 12
+    BuildBatches:
+      type: array
+      items:
+        $ref: '#/components/schemas/BuildBatch'
+      minItems: 0
+      maxItems: 100
+    BuildGroups:
+      type: array
+      items:
+        $ref: '#/components/schemas/BuildGroup'
+    BatchReportModeType:
+      type: string
+      enum:
+      - REPORT_INDIVIDUAL_BUILDS
+      - REPORT_AGGREGATED_BATCH
+    ProjectEnvironment:
+      type: object
+      required:
+      - type
+      - image
+      - computeType
+      properties:
+        type:
+          allOf:
+          - $ref: '#/components/schemas/EnvironmentType'
+          - description: <p>The type of build environment to use for related builds.</p> <ul> <li> <p>The environment type <code>ARM_CONTAINER</code> is available only in regions US East (N. Virginia), US East (Ohio), US West (Oregon), EU (Ireland), Asia Pacific (Mumbai), Asia Pacific (Tokyo), Asia Pacific (Sydney), and EU (Frankfurt).</p> </li> <li> <p>The environment type <code>LINUX_CONTAINER</code> with compute type <code>build.general1.2xlarge</code> is available only in regions US East (N. Virginia), US East (Ohio), US West (Oregon), Canada (Central), EU (Ireland), EU (London), EU (Frankfurt), Asia Pacific (Tokyo), Asia Pacific (Seoul), Asia Pacific (Singapore), Asia Pacific (Sydney), China (Beijing), and China (Ningxia).</p> </li> <li> <p>The environment type <code>LINUX_GPU_CONTAINER</code> is available only in regions US East (N. Virginia), US East (Ohio), US West (Oregon), Canada (Central), EU (Ireland), EU (London), EU (Frankfurt), Asia Pacific (Tokyo), Asia Pacific (Seoul), Asia Pacific (Singapore), Asia Pacific (Sydney) , China (Beijing), and China (Ningxia).</p> </li> </ul> <ul> <li> <p>The environment types <code>WINDOWS_CONTAINER</code> and <code>WINDOWS_SERVER_2019_CONTAINER</code> are available only in regions US East (N. Virginia), US East (Ohio), US West (Oregon), and EU (Ireland).</p> </li> </ul> <p>For more information, see <a href="https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-compute-types.html">Build environment compute types</a> in the <i>CodeBuild user guide</i>.</p>
+        image:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          - description: '<p>The image tag or image digest that identifies the Docker image to use for this build project. Use the following formats:</p> <ul> <li> <p>For an image tag: <code>&lt;registry&gt;/&lt;repository&gt;:&lt;tag&gt;</code>. For example, in the Docker repository that CodeBuild uses to manage its Docker images, this would be <code>aws/codebuild/standard:4.0</code>. </p> </li> <li> <p>For an image digest: <code>&lt;registry&gt;/&lt;repository&gt;@&lt;digest&gt;</code>. For example, to specify an image with the digest "sha256:cbbf2f9a99b47fc460d422812b6a5adff7dfee951d8fa2e4a98caa0382cfbdbf," use <code>&lt;registry&gt;/&lt;repository&gt;@sha256:cbbf2f9a99b47fc460d422812b6a5adff7dfee951d8fa2e4a98caa0382cfbdbf</code>.</p> </li> </ul> <p>For more information, see <a href="https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-available.html">Docker images provided by CodeBuild</a> in the <i>CodeBuild user guide</i>.</p>'
+        computeType:
+          allOf:
+          - $ref: '#/components/schemas/ComputeType'
+          - description: '<p>Information about the compute resources the build project uses. Available values include:</p> <ul> <li> <p> <code>BUILD_GENERAL1_SMALL</code>: Use up to 3 GB memory and 2 vCPUs for builds.</p> </li> <li> <p> <code>BUILD_GENERAL1_MEDIUM</code>: Use up to 7 GB memory and 4 vCPUs for builds.</p> </li> <li> <p> <code>BUILD_GENERAL1_LARGE</code>: Use up to 16 GB memory and 8 vCPUs for builds, depending on your environment type.</p> </li> <li> <p> <code>BUILD_GENERAL1_2XLARGE</code>: Use up to 145 GB memory, 72 vCPUs, and 824 GB of SSD storage for builds. This compute type supports Docker images up to 100 GB uncompressed.</p> </li> </ul> <p> If you use <code>BUILD_GENERAL1_LARGE</code>: </p> <ul> <li> <p> For environment type <code>LINUX_CONTAINER</code>, you can use up to 15 GB memory and 8 vCPUs for builds. </p> </li> <li> <p> For environment type <code>LINUX_GPU_CONTAINER</code>, you can use up to 255 GB memory, 32 vCPUs, and 4 NVIDIA Tesla V100 GPUs for builds.</p> </li> <li> <p> For environment type <code>ARM_CONTAINER</code>, you can use up to 16 GB memory and 8 vCPUs on ARM-based processors for builds.</p> </li> </ul> <p>For more information, see <a href="https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-compute-types.html">Build Environment Compute Types</a> in the <i>CodeBuild User Guide.</i> </p>'
+        environmentVariables:
+          allOf:
+          - $ref: '#/components/schemas/EnvironmentVariables'
+          - description: A set of environment variables to make available to builds for this build project.
+        privilegedMode:
+          allOf:
+          - $ref: '#/components/schemas/WrapperBoolean'
+          - description: <p>Enables running the Docker daemon inside a Docker container. Set to true only if the build project is used to build Docker images. Otherwise, a build that attempts to interact with the Docker daemon fails. The default setting is <code>false</code>.</p> <p>You can initialize the Docker daemon during the install phase of your build by adding one of the following sets of commands to the install phase of your buildspec file:</p> <p>If the operating system's base image is Ubuntu Linux:</p> <p> <code>- nohup /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://0.0.0.0:2375 --storage-driver=overlay&amp;</code> </p> <p> <code>- timeout 15 sh -c "until docker info; do echo .; sleep 1; done"</code> </p> <p>If the operating system's base image is Alpine Linux and the previous command does not work, add the <code>-t</code> argument to <code>timeout</code>:</p> <p> <code>- nohup /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://0.0.0.0:2375 --storage-driver=overlay&amp;</code> </p> <p> <code>- timeout -t 15 sh -c "until docker info; do echo .; sleep 1; done"</code> </p>
+        certificate:
+          allOf:
+          - $ref: '#/components/schemas/String'
+          - description: The ARN of the Amazon S3 bucket, path prefix, and object key that contains the PEM-encoded certificate for the build project. For more information, see <a href="https://docs.aws.amazon.com/codebuild/latest/userguide/create-project-cli.html#cli.environment.certificate">certificate</a> in the <i>CodeBuild User Guide</i>.
+        registryCredential:
+          allOf:
+          - $ref: '#/components/schemas/RegistryCredential'
+          - description: ' The credentials for access to a private registry.'
+        imagePullCredentialsType:
+          allOf:
+          - $ref: '#/components/schemas/ImagePullCredentialsType'
+          - description: '<p> The type of credentials CodeBuild uses to pull images in your build. There are two valid values: </p> <ul> <li> <p> <code>CODEBUILD</code> specifies that CodeBuild uses its own credentials. This requires that you modify your ECR repository policy to trust CodeBuild service principal. </p> </li> <li> <p> <code>SERVICE_ROLE</code> specifies that CodeBuild uses your build project''s service role. </p> </li> </ul> <p> When you use a cross-account or private registry image, you must use SERVICE_ROLE credentials. When you use an CodeBuild curated image, you must use CODEBUILD credentials. </p>'
+      description: Information about the build environment of the build project.
+    GitCloneDepth:
+      type: integer
+      minimum: 0
     ResolvedArtifact:
       type: object
       properties:
@@ -6181,100 +6436,35 @@ components:
           - $ref: '#/components/schemas/String'
           - description: The identifier of the artifact.
       description: Represents a resolved build artifact. A resolved artifact is an artifact that is built and deployed to the destination, such as Amazon S3.
-    Timestamp:
-      type: string
-      format: date-time
-    BuildBatches:
-      type: array
-      items:
-        $ref: '#/components/schemas/BuildBatch'
-      minItems: 0
-      maxItems: 100
-    ComputeType:
+    LogsConfigStatusType:
       type: string
       enum:
-      - BUILD_GENERAL1_SMALL
-      - BUILD_GENERAL1_MEDIUM
-      - BUILD_GENERAL1_LARGE
-      - BUILD_GENERAL1_2XLARGE
-    BuildBatchPhases:
-      type: array
-      items:
-        $ref: '#/components/schemas/BuildBatchPhase'
-    ProjectCacheModes:
-      type: array
-      items:
-        $ref: '#/components/schemas/CacheMode'
-    BatchReportModeType:
-      type: string
-      enum:
-      - REPORT_INDIVIDUAL_BUILDS
-      - REPORT_AGGREGATED_BATCH
-    SourceType:
-      type: string
-      enum:
-      - CODECOMMIT
-      - CODEPIPELINE
-      - GITHUB
-      - S3
-      - BITBUCKET
-      - GITHUB_ENTERPRISE
-      - NO_SOURCE
-    ProjectSourceVersion:
+      - ENABLED
+      - DISABLED
+    BuildGroup:
       type: object
-      required:
-      - sourceIdentifier
-      - sourceVersion
       properties:
-        sourceIdentifier:
+        identifier:
           allOf:
           - $ref: '#/components/schemas/String'
-          - description: 'An identifier for a source in the build project. The identifier can only contain alphanumeric characters and underscores, and must be less than 128 characters in length. '
-        sourceVersion:
+          - description: Contains the identifier of the build group.
+        dependsOn:
           allOf:
-          - $ref: '#/components/schemas/String'
-          - description: '<p>The source version for the corresponding source identifier. If specified, must be one of:</p> <ul> <li> <p>For CodeCommit: the commit ID, branch, or Git tag to use.</p> </li> <li> <p>For GitHub: the commit ID, pull request ID, branch name, or tag name that corresponds to the version of the source code you want to build. If a pull request ID is specified, it must use the format <code>pr/pull-request-ID</code> (for example, <code>pr/25</code>). If a branch name is specified, the branch''s HEAD commit ID is used. If not specified, the default branch''s HEAD commit ID is used.</p> </li> <li> <p>For Bitbucket: the commit ID, branch name, or tag name that corresponds to the version of the source code you want to build. If a branch name is specified, the branch''s HEAD commit ID is used. If not specified, the default branch''s HEAD commit ID is used.</p> </li> <li> <p>For Amazon S3: the version ID of the object that represents the build input ZIP file to use.</p> </li> </ul> <p> For more information, see <a href="https://docs.aws.amazon.com/codebuild/latest/userguide/sample-source-version.html">Source Version Sample with CodeBuild</a> in the <i>CodeBuild User Guide</i>. </p>'
-      description: ' A source identifier and its corresponding version. '
-    StatusType:
-      type: string
-      enum:
-      - SUCCEEDED
-      - FAILED
-      - FAULT
-      - TIMED_OUT
-      - IN_PROGRESS
-      - STOPPED
-    RegistryCredential:
-      type: object
-      required:
-      - credential
-      - credentialProvider
-      properties:
-        credential:
+          - $ref: '#/components/schemas/Identifiers'
+          - description: An array of strings that contain the identifiers of the build groups that this build group depends on.
+        ignoreFailure:
           allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          - description: <p> The Amazon Resource Name (ARN) or name of credentials created using Secrets Manager. </p> <note> <p> The <code>credential</code> can use the name of the credentials only if they exist in your current Amazon Web Services Region. </p> </note>
-        credentialProvider:
+          - $ref: '#/components/schemas/Boolean'
+          - description: Specifies if failures in this build group can be ignored.
+        currentBuildSummary:
           allOf:
-          - $ref: '#/components/schemas/CredentialProviderType'
-          - description: ' The service that created the credentials to access a private Docker registry. The valid value, SECRETS_MANAGER, is for Secrets Manager. '
-      description: '<p> Information about credentials that provide access to a private Docker registry. When this is set: </p> <ul> <li> <p> <code>imagePullCredentialsType</code> must be set to <code>SERVICE_ROLE</code>. </p> </li> <li> <p> images cannot be curated or an Amazon ECR image.</p> </li> </ul> <p> For more information, see <a href="https://docs.aws.amazon.com/codebuild/latest/userguide/sample-private-registry.html">Private Registry with Secrets Manager Sample for CodeBuild</a>. </p>'
-    BuildBatchPhaseType:
-      type: string
-      enum:
-      - SUBMITTED
-      - DOWNLOAD_BATCHSPEC
-      - IN_PROGRESS
-      - COMBINE_ARTIFACTS
-      - SUCCEEDED
-      - FAILED
-      - STOPPED
-    Boolean:
-      type: boolean
-    CredentialProviderType:
-      type: string
-      enum:
-      - SECRETS_MANAGER
+          - $ref: '#/components/schemas/BuildSummary'
+          - description: A <code>BuildSummary</code> object that contains a summary of the current build group.
+        priorBuildSummaryList:
+          allOf:
+          - $ref: '#/components/schemas/BuildSummaries'
+          - description: An array of <code>BuildSummary</code> objects that contain summaries of previous build groups.
+      description: Contains information about a batch build build group. Build groups are used to combine builds that can run in parallel, while still being able to set dependencies on other build groups.
     ProjectSource:
       type: object
       required:
@@ -6321,47 +6511,69 @@ components:
           - $ref: '#/components/schemas/String'
           - description: 'An identifier for this project source. The identifier can only contain alphanumeric characters and underscores, and must be less than 128 characters in length. '
       description: Information about the build input source code for the build project.
-    SourceAuthType:
+    ProjectFileSystemLocations:
+      type: array
+      items:
+        $ref: '#/components/schemas/ProjectFileSystemLocation'
+    BatchGetBuildBatchesOutput:
+      type: object
+      properties:
+        buildBatches:
+          allOf:
+          - $ref: '#/components/schemas/BuildBatches'
+          - description: An array of <code>BuildBatch</code> objects that represent the retrieved batch builds.
+        buildBatchesNotFound:
+          allOf:
+          - $ref: '#/components/schemas/BuildBatchIds'
+          - description: An array that contains the identifiers of any batch builds that are not found.
+    BucketOwnerAccess:
       type: string
       enum:
-      - OAUTH
-    CloudWatchLogsConfig:
+      - NONE
+      - READ_ONLY
+      - FULL
+      description: <p>Specifies the bucket owner's access for objects that another account uploads to their Amazon S3 bucket. By default, only the account that uploads the objects to the bucket has access to these objects. This property allows you to give the bucket owner access to these objects.</p> <note> <p>To use this property, your CodeBuild service role must have the <code>s3:PutBucketAcl</code> permission. This permission allows CodeBuild to modify the access control list for the bucket.</p> </note> <p>This property can be one of the following values:</p> <dl> <dt>NONE</dt> <dd> <p>The bucket owner does not have access to the objects. This is the default.</p> </dd> <dt>READ_ONLY</dt> <dd> <p>The bucket owner has read-only access to the objects. The uploading account retains ownership of the objects.</p> </dd> <dt>FULL</dt> <dd> <p>The bucket owner has full access to the objects. Object ownership is determined by the following criteria:</p> <ul> <li> <p>If the bucket is configured with the <b>Bucket owner preferred</b> setting, the bucket owner owns the objects. The uploading account will have object access as specified by the bucket's policy.</p> </li> <li> <p>Otherwise, the uploading account retains ownership of the objects.</p> </li> </ul> <p>For more information about Amazon S3 object ownership, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/about-object-ownership.html">Controlling ownership of uploaded objects using S3 Object Ownership</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> </dd> </dl>
+    FileSystemType:
+      type: string
+      enum:
+      - EFS
+    BuildArtifacts:
       type: object
-      required:
-      - status
       properties:
-        status:
-          allOf:
-          - $ref: '#/components/schemas/LogsConfigStatusType'
-          - description: '<p>The current status of the logs in CloudWatch Logs for a build project. Valid values are:</p> <ul> <li> <p> <code>ENABLED</code>: CloudWatch Logs are enabled for this build project.</p> </li> <li> <p> <code>DISABLED</code>: CloudWatch Logs are not enabled for this build project.</p> </li> </ul>'
-        groupName:
+        location:
           allOf:
           - $ref: '#/components/schemas/String'
-          - description: ' The group name of the logs in CloudWatch Logs. For more information, see <a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/Working-with-log-groups-and-streams.html">Working with Log Groups and Log Streams</a>. '
-        streamName:
+          - description: Information about the location of the build artifacts.
+        sha256sum:
           allOf:
           - $ref: '#/components/schemas/String'
-          - description: ' The prefix of the stream name of the CloudWatch Logs. For more information, see <a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/Working-with-log-groups-and-streams.html">Working with Log Groups and Log Streams</a>. '
-      description: ' Information about CloudWatch Logs for a build project. '
-    BuildArtifactsList:
-      type: array
-      items:
-        $ref: '#/components/schemas/BuildArtifacts'
-      minItems: 0
-      maxItems: 12
-    Identifiers:
-      type: array
-      items:
-        $ref: '#/components/schemas/NonEmptyString'
-    PhaseContexts:
-      type: array
-      items:
-        $ref: '#/components/schemas/PhaseContext'
-    Subnets:
-      type: array
-      items:
-        $ref: '#/components/schemas/NonEmptyString'
-      maxItems: 16
+          - description: <p>The SHA-256 hash of the build artifact.</p> <p>You can use this hash along with a checksum tool to confirm file integrity and authenticity.</p> <note> <p>This value is available only if the build project's <code>packaging</code> value is set to <code>ZIP</code>.</p> </note>
+        md5sum:
+          allOf:
+          - $ref: '#/components/schemas/String'
+          - description: <p>The MD5 hash of the build artifact.</p> <p>You can use this hash along with a checksum tool to confirm file integrity and authenticity.</p> <note> <p>This value is available only if the build project's <code>packaging</code> value is set to <code>ZIP</code>.</p> </note>
+        overrideArtifactName:
+          allOf:
+          - $ref: '#/components/schemas/WrapperBoolean'
+          - description: ' If this flag is set, a name specified in the buildspec file overrides the artifact name. The name specified in a buildspec file is calculated at build time and uses the Shell Command Language. For example, you can append a date and time to your artifact name so that it is always unique. '
+        encryptionDisabled:
+          allOf:
+          - $ref: '#/components/schemas/WrapperBoolean'
+          - description: ' Information that tells you if encryption for build artifacts is disabled. '
+        artifactIdentifier:
+          allOf:
+          - $ref: '#/components/schemas/String'
+          - description: ' An identifier for this artifact definition. '
+        bucketOwnerAccess:
+          $ref: '#/components/schemas/BucketOwnerAccess'
+      description: Information about build output artifacts.
+    ComputeType:
+      type: string
+      enum:
+      - BUILD_GENERAL1_SMALL
+      - BUILD_GENERAL1_MEDIUM
+      - BUILD_GENERAL1_LARGE
+      - BUILD_GENERAL1_2XLARGE
     BatchRestrictions:
       type: object
       properties:
@@ -6374,38 +6586,18 @@ components:
           - $ref: '#/components/schemas/ComputeTypesAllowed'
           - description: 'An array of strings that specify the compute types that are allowed for the batch build. See <a href="https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-compute-types.html">Build environment compute types</a> in the <i>CodeBuild User Guide</i> for these values. '
       description: Specifies restrictions for the batch build.
-    ProjectFileSystemLocations:
-      type: array
-      items:
-        $ref: '#/components/schemas/ProjectFileSystemLocation'
-    BuildBatchIds:
-      type: array
-      items:
-        $ref: '#/components/schemas/NonEmptyString'
-      minItems: 0
-      maxItems: 100
-    ProjectSources:
-      type: array
-      items:
-        $ref: '#/components/schemas/ProjectSource'
-      minItems: 0
-      maxItems: 12
-    VpcConfig:
-      type: object
-      properties:
-        vpcId:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          - description: The ID of the Amazon VPC.
-        subnets:
-          allOf:
-          - $ref: '#/components/schemas/Subnets'
-          - description: A list of one or more subnet IDs in your Amazon VPC.
-        securityGroupIds:
-          allOf:
-          - $ref: '#/components/schemas/SecurityGroupIds'
-          - description: A list of one or more security groups IDs in your Amazon VPC.
-      description: Information about the VPC configuration that CodeBuild accesses.
+    CredentialProviderType:
+      type: string
+      enum:
+      - SECRETS_MANAGER
+    EnvironmentType:
+      type: string
+      enum:
+      - WINDOWS_CONTAINER
+      - LINUX_CONTAINER
+      - LINUX_GPU_CONTAINER
+      - ARM_CONTAINER
+      - WINDOWS_SERVER_2019_CONTAINER
     ProjectFileSystemLocation:
       type: object
       properties:
@@ -6430,92 +6622,76 @@ components:
           - $ref: '#/components/schemas/String'
           - description: ' The mount options for a file system created by Amazon EFS. The default mount options used by CodeBuild are <code>nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2</code>. For more information, see <a href="https://docs.aws.amazon.com/efs/latest/ug/mounting-fs-nfs-mount-settings.html">Recommended NFS Mount Options</a>. '
       description: ' Information about a file system created by Amazon Elastic File System (EFS). For more information, see <a href="https://docs.aws.amazon.com/efs/latest/ug/whatisefs.html">What Is Amazon Elastic File System?</a> '
-    SecurityGroupIds:
+    BuildStatusConfig:
+      type: object
+      properties:
+        context:
+          allOf:
+          - $ref: '#/components/schemas/String'
+          - description: <p>Specifies the context of the build status CodeBuild sends to the source provider. The usage of this parameter depends on the source provider.</p> <dl> <dt>Bitbucket</dt> <dd> <p>This parameter is used for the <code>name</code> parameter in the Bitbucket commit status. For more information, see <a href="https://developer.atlassian.com/bitbucket/api/2/reference/resource/repositories/%7Bworkspace%7D/%7Brepo_slug%7D/commit/%7Bnode%7D/statuses/build">build</a> in the Bitbucket API documentation.</p> </dd> <dt>GitHub/GitHub Enterprise Server</dt> <dd> <p>This parameter is used for the <code>context</code> parameter in the GitHub commit status. For more information, see <a href="https://developer.github.com/v3/repos/statuses/#create-a-commit-status">Create a commit status</a> in the GitHub developer guide.</p> </dd> </dl>
+        targetUrl:
+          allOf:
+          - $ref: '#/components/schemas/String'
+          - description: <p>Specifies the target url of the build status CodeBuild sends to the source provider. The usage of this parameter depends on the source provider.</p> <dl> <dt>Bitbucket</dt> <dd> <p>This parameter is used for the <code>url</code> parameter in the Bitbucket commit status. For more information, see <a href="https://developer.atlassian.com/bitbucket/api/2/reference/resource/repositories/%7Bworkspace%7D/%7Brepo_slug%7D/commit/%7Bnode%7D/statuses/build">build</a> in the Bitbucket API documentation.</p> </dd> <dt>GitHub/GitHub Enterprise Server</dt> <dd> <p>This parameter is used for the <code>target_url</code> parameter in the GitHub commit status. For more information, see <a href="https://developer.github.com/v3/repos/statuses/#create-a-commit-status">Create a commit status</a> in the GitHub developer guide.</p> </dd> </dl>
+      description: 'Contains information that defines how the CodeBuild build project reports the build status to the source provider. '
+    WrapperLong:
+      type: integer
+    Identifiers:
       type: array
       items:
         $ref: '#/components/schemas/NonEmptyString'
-      maxItems: 5
-    BatchGetBuildBatchesOutput:
+    BuildBatchPhase:
       type: object
       properties:
-        buildBatches:
+        phaseType:
           allOf:
-          - $ref: '#/components/schemas/BuildBatches'
-          - description: An array of <code>BuildBatch</code> objects that represent the retrieved batch builds.
-        buildBatchesNotFound:
+          - $ref: '#/components/schemas/BuildBatchPhaseType'
+          - description: <p>The name of the batch build phase. Valid values include:</p> <dl> <dt>COMBINE_ARTIFACTS</dt> <dd> <p>Build output artifacts are being combined and uploaded to the output location.</p> </dd> <dt>DOWNLOAD_BATCHSPEC</dt> <dd> <p>The batch build specification is being downloaded.</p> </dd> <dt>FAILED</dt> <dd> <p>One or more of the builds failed.</p> </dd> <dt>IN_PROGRESS</dt> <dd> <p>The batch build is in progress.</p> </dd> <dt>STOPPED</dt> <dd> <p>The batch build was stopped.</p> </dd> <dt>SUBMITTED</dt> <dd> <p>The btach build has been submitted.</p> </dd> <dt>SUCCEEDED</dt> <dd> <p>The batch build succeeded.</p> </dd> </dl>
+        phaseStatus:
           allOf:
-          - $ref: '#/components/schemas/BuildBatchIds'
-          - description: An array that contains the identifiers of any batch builds that are not found.
-    ProjectEnvironment:
+          - $ref: '#/components/schemas/StatusType'
+          - description: <p>The current status of the batch build phase. Valid values include:</p> <dl> <dt>FAILED</dt> <dd> <p>The build phase failed.</p> </dd> <dt>FAULT</dt> <dd> <p>The build phase faulted.</p> </dd> <dt>IN_PROGRESS</dt> <dd> <p>The build phase is still in progress.</p> </dd> <dt>STOPPED</dt> <dd> <p>The build phase stopped.</p> </dd> <dt>SUCCEEDED</dt> <dd> <p>The build phase succeeded.</p> </dd> <dt>TIMED_OUT</dt> <dd> <p>The build phase timed out.</p> </dd> </dl>
+        startTime:
+          allOf:
+          - $ref: '#/components/schemas/Timestamp'
+          - description: When the batch build phase started, expressed in Unix time format.
+        endTime:
+          allOf:
+          - $ref: '#/components/schemas/Timestamp'
+          - description: When the batch build phase ended, expressed in Unix time format.
+        durationInSeconds:
+          allOf:
+          - $ref: '#/components/schemas/WrapperLong'
+          - description: How long, in seconds, between the starting and ending times of the batch build's phase.
+        contexts:
+          allOf:
+          - $ref: '#/components/schemas/PhaseContexts'
+          - description: Additional information about the batch build phase. Especially to help troubleshoot a failed batch build.
+      description: Contains information about a stage for a batch build.
+    ProjectBuildBatchConfig:
       type: object
-      required:
-      - type
-      - image
-      - computeType
       properties:
-        type:
-          allOf:
-          - $ref: '#/components/schemas/EnvironmentType'
-          - description: <p>The type of build environment to use for related builds.</p> <ul> <li> <p>The environment type <code>ARM_CONTAINER</code> is available only in regions US East (N. Virginia), US East (Ohio), US West (Oregon), EU (Ireland), Asia Pacific (Mumbai), Asia Pacific (Tokyo), Asia Pacific (Sydney), and EU (Frankfurt).</p> </li> <li> <p>The environment type <code>LINUX_CONTAINER</code> with compute type <code>build.general1.2xlarge</code> is available only in regions US East (N. Virginia), US East (Ohio), US West (Oregon), Canada (Central), EU (Ireland), EU (London), EU (Frankfurt), Asia Pacific (Tokyo), Asia Pacific (Seoul), Asia Pacific (Singapore), Asia Pacific (Sydney), China (Beijing), and China (Ningxia).</p> </li> <li> <p>The environment type <code>LINUX_GPU_CONTAINER</code> is available only in regions US East (N. Virginia), US East (Ohio), US West (Oregon), Canada (Central), EU (Ireland), EU (London), EU (Frankfurt), Asia Pacific (Tokyo), Asia Pacific (Seoul), Asia Pacific (Singapore), Asia Pacific (Sydney) , China (Beijing), and China (Ningxia).</p> </li> </ul> <ul> <li> <p>The environment types <code>WINDOWS_CONTAINER</code> and <code>WINDOWS_SERVER_2019_CONTAINER</code> are available only in regions US East (N. Virginia), US East (Ohio), US West (Oregon), and EU (Ireland).</p> </li> </ul> <p>For more information, see <a href="https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-compute-types.html">Build environment compute types</a> in the <i>CodeBuild user guide</i>.</p>
-        image:
+        serviceRole:
           allOf:
           - $ref: '#/components/schemas/NonEmptyString'
-          - description: '<p>The image tag or image digest that identifies the Docker image to use for this build project. Use the following formats:</p> <ul> <li> <p>For an image tag: <code>&lt;registry&gt;/&lt;repository&gt;:&lt;tag&gt;</code>. For example, in the Docker repository that CodeBuild uses to manage its Docker images, this would be <code>aws/codebuild/standard:4.0</code>. </p> </li> <li> <p>For an image digest: <code>&lt;registry&gt;/&lt;repository&gt;@&lt;digest&gt;</code>. For example, to specify an image with the digest "sha256:cbbf2f9a99b47fc460d422812b6a5adff7dfee951d8fa2e4a98caa0382cfbdbf," use <code>&lt;registry&gt;/&lt;repository&gt;@sha256:cbbf2f9a99b47fc460d422812b6a5adff7dfee951d8fa2e4a98caa0382cfbdbf</code>.</p> </li> </ul> <p>For more information, see <a href="https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-available.html">Docker images provided by CodeBuild</a> in the <i>CodeBuild user guide</i>.</p>'
-        computeType:
-          allOf:
-          - $ref: '#/components/schemas/ComputeType'
-          - description: '<p>Information about the compute resources the build project uses. Available values include:</p> <ul> <li> <p> <code>BUILD_GENERAL1_SMALL</code>: Use up to 3 GB memory and 2 vCPUs for builds.</p> </li> <li> <p> <code>BUILD_GENERAL1_MEDIUM</code>: Use up to 7 GB memory and 4 vCPUs for builds.</p> </li> <li> <p> <code>BUILD_GENERAL1_LARGE</code>: Use up to 16 GB memory and 8 vCPUs for builds, depending on your environment type.</p> </li> <li> <p> <code>BUILD_GENERAL1_2XLARGE</code>: Use up to 145 GB memory, 72 vCPUs, and 824 GB of SSD storage for builds. This compute type supports Docker images up to 100 GB uncompressed.</p> </li> </ul> <p> If you use <code>BUILD_GENERAL1_LARGE</code>: </p> <ul> <li> <p> For environment type <code>LINUX_CONTAINER</code>, you can use up to 15 GB memory and 8 vCPUs for builds. </p> </li> <li> <p> For environment type <code>LINUX_GPU_CONTAINER</code>, you can use up to 255 GB memory, 32 vCPUs, and 4 NVIDIA Tesla V100 GPUs for builds.</p> </li> <li> <p> For environment type <code>ARM_CONTAINER</code>, you can use up to 16 GB memory and 8 vCPUs on ARM-based processors for builds.</p> </li> </ul> <p>For more information, see <a href="https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-compute-types.html">Build Environment Compute Types</a> in the <i>CodeBuild User Guide.</i> </p>'
-        environmentVariables:
-          allOf:
-          - $ref: '#/components/schemas/EnvironmentVariables'
-          - description: A set of environment variables to make available to builds for this build project.
-        privilegedMode:
+          - description: Specifies the service role ARN for the batch build project.
+        combineArtifacts:
           allOf:
           - $ref: '#/components/schemas/WrapperBoolean'
-          - description: <p>Enables running the Docker daemon inside a Docker container. Set to true only if the build project is used to build Docker images. Otherwise, a build that attempts to interact with the Docker daemon fails. The default setting is <code>false</code>.</p> <p>You can initialize the Docker daemon during the install phase of your build by adding one of the following sets of commands to the install phase of your buildspec file:</p> <p>If the operating system's base image is Ubuntu Linux:</p> <p> <code>- nohup /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://0.0.0.0:2375 --storage-driver=overlay&amp;</code> </p> <p> <code>- timeout 15 sh -c "until docker info; do echo .; sleep 1; done"</code> </p> <p>If the operating system's base image is Alpine Linux and the previous command does not work, add the <code>-t</code> argument to <code>timeout</code>:</p> <p> <code>- nohup /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://0.0.0.0:2375 --storage-driver=overlay&amp;</code> </p> <p> <code>- timeout -t 15 sh -c "until docker info; do echo .; sleep 1; done"</code> </p>
-        certificate:
+          - description: Specifies if the build artifacts for the batch build should be combined into a single artifact location.
+        restrictions:
           allOf:
-          - $ref: '#/components/schemas/String'
-          - description: The ARN of the Amazon S3 bucket, path prefix, and object key that contains the PEM-encoded certificate for the build project. For more information, see <a href="https://docs.aws.amazon.com/codebuild/latest/userguide/create-project-cli.html#cli.environment.certificate">certificate</a> in the <i>CodeBuild User Guide</i>.
-        registryCredential:
+          - $ref: '#/components/schemas/BatchRestrictions'
+          - description: A <code>BatchRestrictions</code> object that specifies the restrictions for the batch build.
+        timeoutInMins:
           allOf:
-          - $ref: '#/components/schemas/RegistryCredential'
-          - description: ' The credentials for access to a private registry.'
-        imagePullCredentialsType:
+          - $ref: '#/components/schemas/WrapperInt'
+          - description: Specifies the maximum amount of time, in minutes, that the batch build must be completed in.
+        batchReportMode:
           allOf:
-          - $ref: '#/components/schemas/ImagePullCredentialsType'
-          - description: '<p> The type of credentials CodeBuild uses to pull images in your build. There are two valid values: </p> <ul> <li> <p> <code>CODEBUILD</code> specifies that CodeBuild uses its own credentials. This requires that you modify your ECR repository policy to trust CodeBuild service principal. </p> </li> <li> <p> <code>SERVICE_ROLE</code> specifies that CodeBuild uses your build project''s service role. </p> </li> </ul> <p> When you use a cross-account or private registry image, you must use SERVICE_ROLE credentials. When you use an CodeBuild curated image, you must use CODEBUILD credentials. </p>'
-      description: Information about the build environment of the build project.
-    EnvironmentVariables:
-      type: array
-      items:
-        $ref: '#/components/schemas/EnvironmentVariable'
-    LogsConfig:
-      type: object
-      properties:
-        cloudWatchLogs:
-          allOf:
-          - $ref: '#/components/schemas/CloudWatchLogsConfig'
-          - description: ' Information about CloudWatch Logs for a build project. CloudWatch Logs are enabled by default. '
-        s3Logs:
-          allOf:
-          - $ref: '#/components/schemas/S3LogsConfig'
-          - description: ' Information about logs built to an S3 bucket for a build project. S3 logs are not enabled by default. '
-      description: ' Information about logs for a build project. These can be logs in CloudWatch Logs, built in a specified S3 bucket, or both. '
-    SourceAuth:
-      type: object
-      required:
-      - type
-      properties:
-        type:
-          allOf:
-          - $ref: '#/components/schemas/SourceAuthType'
-          - description: <note> <p> This data type is deprecated and is no longer accurate or used. </p> </note> <p>The authorization type to use. The only valid value is <code>OAUTH</code>, which represents the OAuth authorization type.</p>
-        resource:
-          allOf:
-          - $ref: '#/components/schemas/String'
-          - description: The resource value that applies to the specified authorization type.
-      description: <p>Information about the authorization settings for CodeBuild to access the source code to be built.</p> <p>This information is for the CodeBuild console's use only. Your code should not get or set this information directly.</p>
+          - $ref: '#/components/schemas/BatchReportModeType'
+          - description: <p>Specifies how build status reports are sent to the source provider for the batch build. This property is only used when the source provider for your project is Bitbucket, GitHub, or GitHub Enterprise, and your project is configured to report build statuses to the source provider.</p> <dl> <dt>REPORT_AGGREGATED_BATCH</dt> <dd> <p>(Default) Aggregate all of the build statuses into a single status report.</p> </dd> <dt>REPORT_INDIVIDUAL_BUILDS</dt> <dd> <p>Send a separate status report for each individual build.</p> </dd> </dl>
+      description: Contains configuration information about a batch build project.
     BuildBatch:
       type: object
       properties:
@@ -6628,36 +6804,6 @@ components:
           - $ref: '#/components/schemas/WrapperBoolean'
           - description: Specifies if session debugging is enabled for this batch build. For more information, see <a href="https://docs.aws.amazon.com/codebuild/latest/userguide/session-manager.html">Viewing a running build in Session Manager</a>. Batch session debugging is not supported for matrix batch builds.
       description: Contains information about a batch build.
-    BuildGroup:
-      type: object
-      properties:
-        identifier:
-          allOf:
-          - $ref: '#/components/schemas/String'
-          - description: Contains the identifier of the build group.
-        dependsOn:
-          allOf:
-          - $ref: '#/components/schemas/Identifiers'
-          - description: An array of strings that contain the identifiers of the build groups that this build group depends on.
-        ignoreFailure:
-          allOf:
-          - $ref: '#/components/schemas/Boolean'
-          - description: Specifies if failures in this build group can be ignored.
-        currentBuildSummary:
-          allOf:
-          - $ref: '#/components/schemas/BuildSummary'
-          - description: A <code>BuildSummary</code> object that contains a summary of the current build group.
-        priorBuildSummaryList:
-          allOf:
-          - $ref: '#/components/schemas/BuildSummaries'
-          - description: An array of <code>BuildSummary</code> objects that contain summaries of previous build groups.
-      description: Contains information about a batch build build group. Build groups are used to combine builds that can run in parallel, while still being able to set dependencies on other build groups.
-    BuildGroups:
-      type: array
-      items:
-        $ref: '#/components/schemas/BuildGroup'
-    WrapperBoolean:
-      type: boolean
     BuildSummary:
       type: object
       properties:
@@ -6682,152 +6828,6 @@ components:
           - $ref: '#/components/schemas/ResolvedSecondaryArtifacts'
           - description: An array of <code>ResolvedArtifact</code> objects that represents the secondary build artifacts for the build group.
       description: Contains summary information about a batch build group.
-    EnvironmentVariableType:
-      type: string
-      enum:
-      - PLAINTEXT
-      - PARAMETER_STORE
-      - SECRETS_MANAGER
-    BucketOwnerAccess:
-      type: string
-      enum:
-      - NONE
-      - READ_ONLY
-      - FULL
-      description: <p>Specifies the bucket owner's access for objects that another account uploads to their Amazon S3 bucket. By default, only the account that uploads the objects to the bucket has access to these objects. This property allows you to give the bucket owner access to these objects.</p> <note> <p>To use this property, your CodeBuild service role must have the <code>s3:PutBucketAcl</code> permission. This permission allows CodeBuild to modify the access control list for the bucket.</p> </note> <p>This property can be one of the following values:</p> <dl> <dt>NONE</dt> <dd> <p>The bucket owner does not have access to the objects. This is the default.</p> </dd> <dt>READ_ONLY</dt> <dd> <p>The bucket owner has read-only access to the objects. The uploading account retains ownership of the objects.</p> </dd> <dt>FULL</dt> <dd> <p>The bucket owner has full access to the objects. Object ownership is determined by the following criteria:</p> <ul> <li> <p>If the bucket is configured with the <b>Bucket owner preferred</b> setting, the bucket owner owns the objects. The uploading account will have object access as specified by the bucket's policy.</p> </li> <li> <p>Otherwise, the uploading account retains ownership of the objects.</p> </li> </ul> <p>For more information about Amazon S3 object ownership, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/about-object-ownership.html">Controlling ownership of uploaded objects using S3 Object Ownership</a> in the <i>Amazon Simple Storage Service User Guide</i>.</p> </dd> </dl>
-    ArtifactsType:
-      type: string
-      enum:
-      - CODEPIPELINE
-      - S3
-      - NO_ARTIFACTS
-    BuildBatchPhase:
-      type: object
-      properties:
-        phaseType:
-          allOf:
-          - $ref: '#/components/schemas/BuildBatchPhaseType'
-          - description: <p>The name of the batch build phase. Valid values include:</p> <dl> <dt>COMBINE_ARTIFACTS</dt> <dd> <p>Build output artifacts are being combined and uploaded to the output location.</p> </dd> <dt>DOWNLOAD_BATCHSPEC</dt> <dd> <p>The batch build specification is being downloaded.</p> </dd> <dt>FAILED</dt> <dd> <p>One or more of the builds failed.</p> </dd> <dt>IN_PROGRESS</dt> <dd> <p>The batch build is in progress.</p> </dd> <dt>STOPPED</dt> <dd> <p>The batch build was stopped.</p> </dd> <dt>SUBMITTED</dt> <dd> <p>The btach build has been submitted.</p> </dd> <dt>SUCCEEDED</dt> <dd> <p>The batch build succeeded.</p> </dd> </dl>
-        phaseStatus:
-          allOf:
-          - $ref: '#/components/schemas/StatusType'
-          - description: <p>The current status of the batch build phase. Valid values include:</p> <dl> <dt>FAILED</dt> <dd> <p>The build phase failed.</p> </dd> <dt>FAULT</dt> <dd> <p>The build phase faulted.</p> </dd> <dt>IN_PROGRESS</dt> <dd> <p>The build phase is still in progress.</p> </dd> <dt>STOPPED</dt> <dd> <p>The build phase stopped.</p> </dd> <dt>SUCCEEDED</dt> <dd> <p>The build phase succeeded.</p> </dd> <dt>TIMED_OUT</dt> <dd> <p>The build phase timed out.</p> </dd> </dl>
-        startTime:
-          allOf:
-          - $ref: '#/components/schemas/Timestamp'
-          - description: When the batch build phase started, expressed in Unix time format.
-        endTime:
-          allOf:
-          - $ref: '#/components/schemas/Timestamp'
-          - description: When the batch build phase ended, expressed in Unix time format.
-        durationInSeconds:
-          allOf:
-          - $ref: '#/components/schemas/WrapperLong'
-          - description: How long, in seconds, between the starting and ending times of the batch build's phase.
-        contexts:
-          allOf:
-          - $ref: '#/components/schemas/PhaseContexts'
-          - description: Additional information about the batch build phase. Especially to help troubleshoot a failed batch build.
-      description: Contains information about a stage for a batch build.
-    S3LogsConfig:
-      type: object
-      required:
-      - status
-      properties:
-        status:
-          allOf:
-          - $ref: '#/components/schemas/LogsConfigStatusType'
-          - description: '<p>The current status of the S3 build logs. Valid values are:</p> <ul> <li> <p> <code>ENABLED</code>: S3 build logs are enabled for this build project.</p> </li> <li> <p> <code>DISABLED</code>: S3 build logs are not enabled for this build project.</p> </li> </ul>'
-        location:
-          allOf:
-          - $ref: '#/components/schemas/String'
-          - description: ' The ARN of an S3 bucket and the path prefix for S3 logs. If your Amazon S3 bucket name is <code>my-bucket</code>, and your path prefix is <code>build-log</code>, then acceptable formats are <code>my-bucket/build-log</code> or <code>arn:aws:s3:::my-bucket/build-log</code>. '
-        encryptionDisabled:
-          allOf:
-          - $ref: '#/components/schemas/WrapperBoolean'
-          - description: ' Set to true if you do not want your S3 build log output encrypted. By default S3 build logs are encrypted. '
-        bucketOwnerAccess:
-          $ref: '#/components/schemas/BucketOwnerAccess'
-      description: ' Information about S3 logs for a build project. '
-    EnvironmentVariable:
-      type: object
-      required:
-      - name
-      - value
-      properties:
-        name:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          - description: The name or key of the environment variable.
-        value:
-          allOf:
-          - $ref: '#/components/schemas/String'
-          - description: <p>The value of the environment variable.</p> <important> <p>We strongly discourage the use of <code>PLAINTEXT</code> environment variables to store sensitive values, especially Amazon Web Services secret key IDs and secret access keys. <code>PLAINTEXT</code> environment variables can be displayed in plain text using the CodeBuild console and the CLI. For sensitive values, we recommend you use an environment variable of type <code>PARAMETER_STORE</code> or <code>SECRETS_MANAGER</code>. </p> </important>
-        type:
-          allOf:
-          - $ref: '#/components/schemas/EnvironmentVariableType'
-          - description: '<p>The type of environment variable. Valid values include:</p> <ul> <li> <p> <code>PARAMETER_STORE</code>: An environment variable stored in Systems Manager Parameter Store. To learn how to specify a parameter store environment variable, see <a href="https://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html#build-spec.env.parameter-store">env/parameter-store</a> in the <i>CodeBuild User Guide</i>.</p> </li> <li> <p> <code>PLAINTEXT</code>: An environment variable in plain text format. This is the default value.</p> </li> <li> <p> <code>SECRETS_MANAGER</code>: An environment variable stored in Secrets Manager. To learn how to specify a secrets manager environment variable, see <a href="https://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html#build-spec.env.secrets-manager">env/secrets-manager</a> in the <i>CodeBuild User Guide</i>.</p> </li> </ul>'
-      description: Information about an environment variable for a build project or a build.
-    CacheMode:
-      type: string
-      enum:
-      - LOCAL_DOCKER_LAYER_CACHE
-      - LOCAL_SOURCE_CACHE
-      - LOCAL_CUSTOM_CACHE
-    ResolvedSecondaryArtifacts:
-      type: array
-      items:
-        $ref: '#/components/schemas/ResolvedArtifact'
-    GitCloneDepth:
-      type: integer
-      minimum: 0
-    BuildArtifacts:
-      type: object
-      properties:
-        location:
-          allOf:
-          - $ref: '#/components/schemas/String'
-          - description: Information about the location of the build artifacts.
-        sha256sum:
-          allOf:
-          - $ref: '#/components/schemas/String'
-          - description: <p>The SHA-256 hash of the build artifact.</p> <p>You can use this hash along with a checksum tool to confirm file integrity and authenticity.</p> <note> <p>This value is available only if the build project's <code>packaging</code> value is set to <code>ZIP</code>.</p> </note>
-        md5sum:
-          allOf:
-          - $ref: '#/components/schemas/String'
-          - description: <p>The MD5 hash of the build artifact.</p> <p>You can use this hash along with a checksum tool to confirm file integrity and authenticity.</p> <note> <p>This value is available only if the build project's <code>packaging</code> value is set to <code>ZIP</code>.</p> </note>
-        overrideArtifactName:
-          allOf:
-          - $ref: '#/components/schemas/WrapperBoolean'
-          - description: ' If this flag is set, a name specified in the buildspec file overrides the artifact name. The name specified in a buildspec file is calculated at build time and uses the Shell Command Language. For example, you can append a date and time to your artifact name so that it is always unique. '
-        encryptionDisabled:
-          allOf:
-          - $ref: '#/components/schemas/WrapperBoolean'
-          - description: ' Information that tells you if encryption for build artifacts is disabled. '
-        artifactIdentifier:
-          allOf:
-          - $ref: '#/components/schemas/String'
-          - description: ' An identifier for this artifact definition. '
-        bucketOwnerAccess:
-          $ref: '#/components/schemas/BucketOwnerAccess'
-      description: Information about build output artifacts.
-    LogsConfigStatusType:
-      type: string
-      enum:
-      - ENABLED
-      - DISABLED
-    ComputeTypesAllowed:
-      type: array
-      items:
-        $ref: '#/components/schemas/NonEmptyString'
-    BuildSummaries:
-      type: array
-      items:
-        $ref: '#/components/schemas/BuildSummary'
-    WrapperLong:
-      type: integer
-    WrapperInt:
-      type: integer
     NetworkInterface:
       type: object
       properties:
@@ -6840,6 +6840,20 @@ components:
           - $ref: '#/components/schemas/NonEmptyString'
           - description: The ID of the network interface.
       description: Describes a network interface.
+    BatchGetBuildsInput:
+      type: object
+      required:
+      - ids
+      title: BatchGetBuildsInput
+      properties:
+        ids:
+          allOf:
+          - $ref: '#/components/schemas/BuildIds'
+          - description: The IDs of the builds.
+    BuildPhases:
+      type: array
+      items:
+        $ref: '#/components/schemas/BuildPhase'
     BatchGetBuildsOutput:
       type: object
       properties:
@@ -6851,6 +6865,10 @@ components:
           allOf:
           - $ref: '#/components/schemas/BuildIds'
           - description: The IDs of builds for which information could not be found.
+    BuildReportArns:
+      type: array
+      items:
+        $ref: '#/components/schemas/String'
     LogsLocation:
       type: object
       properties:
@@ -6887,6 +6905,18 @@ components:
           - $ref: '#/components/schemas/S3LogsConfig'
           - description: ' Information about S3 logs for a build project. '
       description: Information about build logs in CloudWatch Logs.
+    ExportedEnvironmentVariable:
+      type: object
+      properties:
+        name:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          - description: The name of the exported environment variable.
+        value:
+          allOf:
+          - $ref: '#/components/schemas/String'
+          - description: The value assigned to the exported environment variable.
+      description: <p>Contains information about an exported environment variable. </p> <p>Exported environment variables are used in conjunction with CodePipeline to export environment variables from the current build stage to subsequent stages in the pipeline. For more information, see <a href="https://docs.aws.amazon.com/codepipeline/latest/userguide/actions-variables.html">Working with variables</a> in the <i>CodePipeline User Guide</i>.</p> <note> <p> During a build, the value of a variable is available starting with the <code>install</code> phase. It can be updated between the start of the <code>install</code> phase and the end of the <code>post_build</code> phase. After the <code>post_build</code> phase ends, the value of exported variables cannot change.</p> </note>
     BuildPhase:
       type: object
       properties:
@@ -6919,6 +6949,18 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/Build'
+    DebugSession:
+      type: object
+      properties:
+        sessionEnabled:
+          allOf:
+          - $ref: '#/components/schemas/WrapperBoolean'
+          - description: Specifies if session debugging is enabled for this build.
+        sessionTarget:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          - description: Contains the identifier of the Session Manager session used for the build. To work with the paused build, you open this session to examine, control, and resume the build.
+      description: Contains information about the debug session for a build. For more information, see <a href="https://docs.aws.amazon.com/codebuild/latest/userguide/session-manager.html">Viewing a running build in Session Manager</a>.
     Build:
       type: object
       properties:
@@ -7051,10 +7093,6 @@ components:
           - $ref: '#/components/schemas/String'
           - description: The ARN of the batch build that this build is a member of, if applicable.
       description: Information about a build.
-    BuildPhases:
-      type: array
-      items:
-        $ref: '#/components/schemas/BuildPhase'
     BuildPhaseType:
       type: string
       enum:
@@ -7069,58 +7107,10 @@ components:
       - UPLOAD_ARTIFACTS
       - FINALIZING
       - COMPLETED
-    BuildReportArns:
-      type: array
-      items:
-        $ref: '#/components/schemas/String'
-    BatchGetBuildsInput:
-      type: object
-      required:
-      - ids
-      title: BatchGetBuildsInput
-      properties:
-        ids:
-          allOf:
-          - $ref: '#/components/schemas/BuildIds'
-          - description: The IDs of the builds.
-    ExportedEnvironmentVariable:
-      type: object
-      properties:
-        name:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          - description: The name of the exported environment variable.
-        value:
-          allOf:
-          - $ref: '#/components/schemas/String'
-          - description: The value assigned to the exported environment variable.
-      description: <p>Contains information about an exported environment variable. </p> <p>Exported environment variables are used in conjunction with CodePipeline to export environment variables from the current build stage to subsequent stages in the pipeline. For more information, see <a href="https://docs.aws.amazon.com/codepipeline/latest/userguide/actions-variables.html">Working with variables</a> in the <i>CodePipeline User Guide</i>.</p> <note> <p> During a build, the value of a variable is available starting with the <code>install</code> phase. It can be updated between the start of the <code>install</code> phase and the end of the <code>post_build</code> phase. After the <code>post_build</code> phase ends, the value of exported variables cannot change.</p> </note>
-    DebugSession:
-      type: object
-      properties:
-        sessionEnabled:
-          allOf:
-          - $ref: '#/components/schemas/WrapperBoolean'
-          - description: Specifies if session debugging is enabled for this build.
-        sessionTarget:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          - description: Contains the identifier of the Session Manager session used for the build. To work with the paused build, you open this session to examine, control, and resume the build.
-      description: Contains information about the debug session for a build. For more information, see <a href="https://docs.aws.amazon.com/codebuild/latest/userguide/session-manager.html">Viewing a running build in Session Manager</a>.
     ExportedEnvironmentVariables:
       type: array
       items:
         $ref: '#/components/schemas/ExportedEnvironmentVariable'
-    ArtifactNamespace:
-      type: string
-      enum:
-      - NONE
-      - BUILD_ID
-    WebhookBuildType:
-      type: string
-      enum:
-      - BUILD
-      - BUILD_BATCH
     WebhookFilterType:
       type: string
       enum:
@@ -7130,6 +7120,10 @@ components:
       - ACTOR_ACCOUNT_ID
       - FILE_PATH
       - COMMIT_MESSAGE
+    Projects:
+      type: array
+      items:
+        $ref: '#/components/schemas/Project'
     BatchGetProjectsOutput:
       type: object
       properties:
@@ -7141,22 +7135,6 @@ components:
           allOf:
           - $ref: '#/components/schemas/ProjectNames'
           - description: The names of build projects for which information could not be found.
-    FilterGroups:
-      type: array
-      items:
-        $ref: '#/components/schemas/FilterGroup'
-    Tag:
-      type: object
-      properties:
-        key:
-          allOf:
-          - $ref: '#/components/schemas/KeyInput'
-          - description: The tag's key.
-        value:
-          allOf:
-          - $ref: '#/components/schemas/ValueInput'
-          - description: The tag's value.
-      description: <p>A tag, consisting of a key and a value.</p> <p>This tag is available for use by Amazon Web Services services that support tags in CodeBuild.</p>
     Webhook:
       type: object
       properties:
@@ -7189,6 +7167,26 @@ components:
           - $ref: '#/components/schemas/Timestamp'
           - description: 'A timestamp that indicates the last time a repository''s secret token was modified. '
       description: Information about a webhook that connects repository events to a build project in CodeBuild.
+    ArtifactPackaging:
+      type: string
+      enum:
+      - NONE
+      - ZIP
+    FilterGroups:
+      type: array
+      items:
+        $ref: '#/components/schemas/FilterGroup'
+    ProjectNames:
+      type: array
+      items:
+        $ref: '#/components/schemas/NonEmptyString'
+      minItems: 1
+      maxItems: 100
+    ProjectName:
+      type: string
+      pattern: '[A-Za-z0-9][A-Za-z0-9\-_]{1,254}'
+      minLength: 2
+      maxLength: 255
     Project:
       type: object
       properties:
@@ -7303,23 +7301,6 @@ components:
           - $ref: '#/components/schemas/NonEmptyString'
           - description: The ARN of the IAM role that enables CodeBuild to access the CloudWatch Logs and Amazon S3 artifacts for the project's builds.
       description: Information about a build project.
-    ProjectBadge:
-      type: object
-      properties:
-        badgeEnabled:
-          allOf:
-          - $ref: '#/components/schemas/Boolean'
-          - description: Set this to true to generate a publicly accessible URL for your project's build badge.
-        badgeRequestUrl:
-          allOf:
-          - $ref: '#/components/schemas/String'
-          - description: 'The publicly-accessible URL through which you can access the build badge for your project. '
-      description: Information about the build badge for the build project.
-    ArtifactPackaging:
-      type: string
-      enum:
-      - NONE
-      - ZIP
     WebhookFilter:
       type: object
       required:
@@ -7339,6 +7320,73 @@ components:
           - $ref: '#/components/schemas/WrapperBoolean'
           - description: ' Used to indicate that the <code>pattern</code> determines which webhook events do not trigger a build. If true, then a webhook event that does not match the <code>pattern</code> triggers a build. If false, then a webhook event that matches the <code>pattern</code> triggers a build. '
       description: ' A filter used to determine which webhooks trigger a build. '
+    TagList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Tag'
+      minItems: 0
+      maxItems: 50
+    TimeOut:
+      type: integer
+      minimum: 5
+      maximum: 480
+    ProjectDescription:
+      type: string
+      minLength: 0
+      maxLength: 255
+    Tag:
+      type: object
+      properties:
+        key:
+          allOf:
+          - $ref: '#/components/schemas/KeyInput'
+          - description: The tag's key.
+        value:
+          allOf:
+          - $ref: '#/components/schemas/ValueInput'
+          - description: The tag's value.
+      description: <p>A tag, consisting of a key and a value.</p> <p>This tag is available for use by Amazon Web Services services that support tags in CodeBuild.</p>
+    ArtifactNamespace:
+      type: string
+      enum:
+      - NONE
+      - BUILD_ID
+    ProjectVisibilityType:
+      type: string
+      enum:
+      - PUBLIC_READ
+      - PRIVATE
+      description: <p>Specifies the visibility of the project's builds. Possible values are:</p> <dl> <dt>PUBLIC_READ</dt> <dd> <p>The project builds are visible to the public.</p> </dd> <dt>PRIVATE</dt> <dd> <p>The project builds are not visible to the public.</p> </dd> </dl>
+    FilterGroup:
+      type: array
+      items:
+        $ref: '#/components/schemas/WebhookFilter'
+    ProjectArtifactsList:
+      type: array
+      items:
+        $ref: '#/components/schemas/ProjectArtifacts'
+      minItems: 0
+      maxItems: 12
+    WebhookBuildType:
+      type: string
+      enum:
+      - BUILD
+      - BUILD_BATCH
+    KeyInput:
+      type: string
+      pattern: ^([\p{L}\p{Z}\p{N}_.:/=@+\-]*)$
+      minLength: 1
+      maxLength: 127
+    BatchGetProjectsInput:
+      type: object
+      required:
+      - names
+      title: BatchGetProjectsInput
+      properties:
+        names:
+          allOf:
+          - $ref: '#/components/schemas/ProjectNames'
+          - description: The names or ARNs of the build projects. To get information about a project shared with your Amazon Web Services account, its ARN must be specified. You cannot specify a shared project using its name.
     ProjectArtifacts:
       type: object
       required:
@@ -7383,134 +7431,28 @@ components:
         bucketOwnerAccess:
           $ref: '#/components/schemas/BucketOwnerAccess'
       description: Information about the build output artifacts for the build project.
-    Projects:
-      type: array
-      items:
-        $ref: '#/components/schemas/Project'
-    TagList:
-      type: array
-      items:
-        $ref: '#/components/schemas/Tag'
-      minItems: 0
-      maxItems: 50
-    KeyInput:
-      type: string
-      pattern: ^([\p{L}\p{Z}\p{N}_.:/=@+\-]*)$
-      minLength: 1
-      maxLength: 127
-    ProjectName:
-      type: string
-      pattern: '[A-Za-z0-9][A-Za-z0-9\-_]{1,254}'
-      minLength: 2
-      maxLength: 255
-    FilterGroup:
-      type: array
-      items:
-        $ref: '#/components/schemas/WebhookFilter'
-    TimeOut:
-      type: integer
-      minimum: 5
-      maximum: 480
-    ProjectArtifactsList:
-      type: array
-      items:
-        $ref: '#/components/schemas/ProjectArtifacts'
-      minItems: 0
-      maxItems: 12
     ValueInput:
       type: string
       pattern: ^([\p{L}\p{Z}\p{N}_.:/=@+\-]*)$
       minLength: 0
       maxLength: 255
-    ProjectDescription:
-      type: string
-      minLength: 0
-      maxLength: 255
-    ProjectVisibilityType:
-      type: string
-      enum:
-      - PUBLIC_READ
-      - PRIVATE
-      description: <p>Specifies the visibility of the project's builds. Possible values are:</p> <dl> <dt>PUBLIC_READ</dt> <dd> <p>The project builds are visible to the public.</p> </dd> <dt>PRIVATE</dt> <dd> <p>The project builds are not visible to the public.</p> </dd> </dl>
-    ProjectNames:
-      type: array
-      items:
-        $ref: '#/components/schemas/NonEmptyString'
-      minItems: 1
-      maxItems: 100
-    BatchGetProjectsInput:
+    ProjectBadge:
       type: object
-      required:
-      - names
-      title: BatchGetProjectsInput
       properties:
-        names:
+        badgeEnabled:
           allOf:
-          - $ref: '#/components/schemas/ProjectNames'
-          - description: The names or ARNs of the build projects. To get information about a project shared with your Amazon Web Services account, its ARN must be specified. You cannot specify a shared project using its name.
-    BatchGetReportGroupsInput:
-      type: object
-      required:
-      - reportGroupArns
-      title: BatchGetReportGroupsInput
-      properties:
-        reportGroupArns:
+          - $ref: '#/components/schemas/Boolean'
+          - description: Set this to true to generate a publicly accessible URL for your project's build badge.
+        badgeRequestUrl:
           allOf:
-          - $ref: '#/components/schemas/ReportGroupArns'
-          - description: ' An array of report group ARNs that identify the report groups to return. '
+          - $ref: '#/components/schemas/String'
+          - description: 'The publicly-accessible URL through which you can access the build badge for your project. '
+      description: Information about the build badge for the build project.
     ReportGroupStatusType:
       type: string
       enum:
       - ACTIVE
       - DELETING
-    ReportExportConfigType:
-      type: string
-      enum:
-      - S3
-      - NO_EXPORT
-    ReportType:
-      type: string
-      enum:
-      - TEST
-      - CODE_COVERAGE
-    ReportGroups:
-      type: array
-      items:
-        $ref: '#/components/schemas/ReportGroup'
-      minItems: 1
-      maxItems: 100
-    S3ReportExportConfig:
-      type: object
-      properties:
-        bucket:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          - description: ' The name of the S3 bucket where the raw data of a report are exported. '
-        bucketOwner:
-          allOf:
-          - $ref: '#/components/schemas/String'
-          - description: The Amazon Web Services account identifier of the owner of the Amazon S3 bucket. This allows report data to be exported to an Amazon S3 bucket that is owned by an account other than the account running the build.
-        path:
-          allOf:
-          - $ref: '#/components/schemas/String'
-          - description: ' The path to the exported report''s raw data results. '
-        packaging:
-          allOf:
-          - $ref: '#/components/schemas/ReportPackagingType'
-          - description: '<p> The type of build output artifact to create. Valid values include: </p> <ul> <li> <p> <code>NONE</code>: CodeBuild creates the raw data in the output bucket. This is the default if packaging is not specified. </p> </li> <li> <p> <code>ZIP</code>: CodeBuild creates a ZIP file with the raw data in the output bucket. </p> </li> </ul>'
-        encryptionKey:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          - description: ' The encryption key for the report''s encrypted raw data. '
-        encryptionDisabled:
-          allOf:
-          - $ref: '#/components/schemas/WrapperBoolean'
-          - description: ' A boolean value that specifies if the results of a report are encrypted. '
-      description: ' Information about the S3 bucket where the raw data of a report are exported. '
-    ReportGroupName:
-      type: string
-      minLength: 2
-      maxLength: 128
     BatchGetReportGroupsOutput:
       type: object
       properties:
@@ -7522,29 +7464,41 @@ components:
           allOf:
           - $ref: '#/components/schemas/ReportGroupArns'
           - description: ' An array of ARNs passed to <code>BatchGetReportGroups</code> that are not associated with a <code>ReportGroup</code>. '
-    ReportGroupArns:
+    ReportGroups:
       type: array
       items:
-        $ref: '#/components/schemas/NonEmptyString'
+        $ref: '#/components/schemas/ReportGroup'
       minItems: 1
       maxItems: 100
+    ReportType:
+      type: string
+      enum:
+      - TEST
+      - CODE_COVERAGE
+    ReportGroupName:
+      type: string
+      minLength: 2
+      maxLength: 128
     ReportPackagingType:
       type: string
       enum:
       - ZIP
       - NONE
-    ReportExportConfig:
+    ReportExportConfigType:
+      type: string
+      enum:
+      - S3
+      - NO_EXPORT
+    BatchGetReportGroupsInput:
       type: object
+      required:
+      - reportGroupArns
+      title: BatchGetReportGroupsInput
       properties:
-        exportConfigType:
+        reportGroupArns:
           allOf:
-          - $ref: '#/components/schemas/ReportExportConfigType'
-          - description: '<p> The export configuration type. Valid values are: </p> <ul> <li> <p> <code>S3</code>: The report results are exported to an S3 bucket. </p> </li> <li> <p> <code>NO_EXPORT</code>: The report results are not exported. </p> </li> </ul>'
-        s3Destination:
-          allOf:
-          - $ref: '#/components/schemas/S3ReportExportConfig'
-          - description: ' A <code>S3ReportExportConfig</code> object that contains information about the S3 bucket where the run of a report is exported. '
-      description: ' Information about the location where the run of a report is exported. '
+          - $ref: '#/components/schemas/ReportGroupArns'
+          - description: ' An array of report group ARNs that identify the report groups to return. '
     ReportGroup:
       type: object
       properties:
@@ -7581,6 +7535,133 @@ components:
           - $ref: '#/components/schemas/ReportGroupStatusType'
           - description: <p>The status of the report group. This property is read-only.</p> <p>This can be one of the following values:</p> <dl> <dt>ACTIVE</dt> <dd> <p>The report group is active.</p> </dd> <dt>DELETING</dt> <dd> <p>The report group is in the process of being deleted.</p> </dd> </dl>
       description: 'A series of reports. Each report contains information about the results from running a series of test cases. You specify the test cases for a report group in the buildspec for a build project using one or more paths to the test case files. '
+    S3ReportExportConfig:
+      type: object
+      properties:
+        bucket:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          - description: ' The name of the S3 bucket where the raw data of a report are exported. '
+        bucketOwner:
+          allOf:
+          - $ref: '#/components/schemas/String'
+          - description: The Amazon Web Services account identifier of the owner of the Amazon S3 bucket. This allows report data to be exported to an Amazon S3 bucket that is owned by an account other than the account running the build.
+        path:
+          allOf:
+          - $ref: '#/components/schemas/String'
+          - description: ' The path to the exported report''s raw data results. '
+        packaging:
+          allOf:
+          - $ref: '#/components/schemas/ReportPackagingType'
+          - description: '<p> The type of build output artifact to create. Valid values include: </p> <ul> <li> <p> <code>NONE</code>: CodeBuild creates the raw data in the output bucket. This is the default if packaging is not specified. </p> </li> <li> <p> <code>ZIP</code>: CodeBuild creates a ZIP file with the raw data in the output bucket. </p> </li> </ul>'
+        encryptionKey:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          - description: ' The encryption key for the report''s encrypted raw data. '
+        encryptionDisabled:
+          allOf:
+          - $ref: '#/components/schemas/WrapperBoolean'
+          - description: ' A boolean value that specifies if the results of a report are encrypted. '
+      description: ' Information about the S3 bucket where the raw data of a report are exported. '
+    ReportExportConfig:
+      type: object
+      properties:
+        exportConfigType:
+          allOf:
+          - $ref: '#/components/schemas/ReportExportConfigType'
+          - description: '<p> The export configuration type. Valid values are: </p> <ul> <li> <p> <code>S3</code>: The report results are exported to an S3 bucket. </p> </li> <li> <p> <code>NO_EXPORT</code>: The report results are not exported. </p> </li> </ul>'
+        s3Destination:
+          allOf:
+          - $ref: '#/components/schemas/S3ReportExportConfig'
+          - description: ' A <code>S3ReportExportConfig</code> object that contains information about the S3 bucket where the run of a report is exported. '
+      description: ' Information about the location where the run of a report is exported. '
+    ReportGroupArns:
+      type: array
+      items:
+        $ref: '#/components/schemas/NonEmptyString'
+      minItems: 1
+      maxItems: 100
+    ReportArns:
+      type: array
+      items:
+        $ref: '#/components/schemas/NonEmptyString'
+      minItems: 1
+      maxItems: 100
+    Reports:
+      type: array
+      items:
+        $ref: '#/components/schemas/Report'
+      minItems: 1
+      maxItems: 100
+    CodeCoverageReportSummary:
+      type: object
+      properties:
+        lineCoveragePercentage:
+          allOf:
+          - $ref: '#/components/schemas/Percentage'
+          - description: The percentage of lines that are covered by your tests.
+        linesCovered:
+          allOf:
+          - $ref: '#/components/schemas/NonNegativeInt'
+          - description: The number of lines that are covered by your tests.
+        linesMissed:
+          allOf:
+          - $ref: '#/components/schemas/NonNegativeInt'
+          - description: The number of lines that are not covered by your tests.
+        branchCoveragePercentage:
+          allOf:
+          - $ref: '#/components/schemas/Percentage'
+          - description: The percentage of branches that are covered by your tests.
+        branchesCovered:
+          allOf:
+          - $ref: '#/components/schemas/NonNegativeInt'
+          - description: The number of conditional branches that are covered by your tests.
+        branchesMissed:
+          allOf:
+          - $ref: '#/components/schemas/NonNegativeInt'
+          - description: The number of conditional branches that are not covered by your tests.
+      description: <p>Contains a summary of a code coverage report.</p> <p>Line coverage measures how many statements your tests cover. A statement is a single instruction, not including comments, conditionals, etc.</p> <p>Branch coverage determines if your tests cover every possible branch of a control structure, such as an <code>if</code> or <code>case</code> statement.</p>
+    BatchGetReportsOutput:
+      type: object
+      properties:
+        reports:
+          allOf:
+          - $ref: '#/components/schemas/Reports'
+          - description: ' The array of <code>Report</code> objects returned by <code>BatchGetReports</code>. '
+        reportsNotFound:
+          allOf:
+          - $ref: '#/components/schemas/ReportArns'
+          - description: ' An array of ARNs passed to <code>BatchGetReportGroups</code> that are not associated with a <code>Report</code>. '
+    ReportStatusCounts:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/WrapperInt'
+    ReportStatusType:
+      type: string
+      enum:
+      - GENERATING
+      - SUCCEEDED
+      - FAILED
+      - INCOMPLETE
+      - DELETING
+    BatchGetReportsInput:
+      type: object
+      required:
+      - reportArns
+      title: BatchGetReportsInput
+      properties:
+        reportArns:
+          allOf:
+          - $ref: '#/components/schemas/ReportArns'
+          - description: ' An array of ARNs that identify the <code>Report</code> objects to return. '
+    NonNegativeInt:
+      type: integer
+      minimum: 0
+    Percentage:
+      type: number
+      format: double
+      minimum: 0
+      maximum: 100
     TestReportSummary:
       type: object
       required:
@@ -7601,34 +7682,6 @@ components:
           - $ref: '#/components/schemas/WrapperLong'
           - description: ' The number of nanoseconds it took to run all of the test cases in this report. '
       description: ' Information about a test report. '
-    ReportArns:
-      type: array
-      items:
-        $ref: '#/components/schemas/NonEmptyString'
-      minItems: 1
-      maxItems: 100
-    Percentage:
-      type: number
-      format: double
-      minimum: 0
-      maximum: 100
-    ReportStatusCounts:
-      type: object
-      additionalProperties:
-        $ref: '#/components/schemas/WrapperInt'
-    BatchGetReportsInput:
-      type: object
-      required:
-      - reportArns
-      title: BatchGetReportsInput
-      properties:
-        reportArns:
-          allOf:
-          - $ref: '#/components/schemas/ReportArns'
-          - description: ' An array of ARNs that identify the <code>Report</code> objects to return. '
-    NonNegativeInt:
-      type: integer
-      minimum: 0
     Report:
       type: object
       properties:
@@ -7681,61 +7734,14 @@ components:
           - $ref: '#/components/schemas/CodeCoverageReportSummary'
           - description: A <code>CodeCoverageReportSummary</code> object that contains a code coverage summary for this report.
       description: 'Information about the results from running a series of test cases during the run of a build project. The test cases are specified in the buildspec for the build project using one or more paths to the test case files. You can specify any type of tests you want, such as unit tests, integration tests, and functional tests. '
-    BatchGetReportsOutput:
-      type: object
-      properties:
-        reports:
-          allOf:
-          - $ref: '#/components/schemas/Reports'
-          - description: ' The array of <code>Report</code> objects returned by <code>BatchGetReports</code>. '
-        reportsNotFound:
-          allOf:
-          - $ref: '#/components/schemas/ReportArns'
-          - description: ' An array of ARNs passed to <code>BatchGetReportGroups</code> that are not associated with a <code>Report</code>. '
-    CodeCoverageReportSummary:
-      type: object
-      properties:
-        lineCoveragePercentage:
-          allOf:
-          - $ref: '#/components/schemas/Percentage'
-          - description: The percentage of lines that are covered by your tests.
-        linesCovered:
-          allOf:
-          - $ref: '#/components/schemas/NonNegativeInt'
-          - description: The number of lines that are covered by your tests.
-        linesMissed:
-          allOf:
-          - $ref: '#/components/schemas/NonNegativeInt'
-          - description: The number of lines that are not covered by your tests.
-        branchCoveragePercentage:
-          allOf:
-          - $ref: '#/components/schemas/Percentage'
-          - description: The percentage of branches that are covered by your tests.
-        branchesCovered:
-          allOf:
-          - $ref: '#/components/schemas/NonNegativeInt'
-          - description: The number of conditional branches that are covered by your tests.
-        branchesMissed:
-          allOf:
-          - $ref: '#/components/schemas/NonNegativeInt'
-          - description: The number of conditional branches that are not covered by your tests.
-      description: <p>Contains a summary of a code coverage report.</p> <p>Line coverage measures how many statements your tests cover. A statement is a single instruction, not including comments, conditionals, etc.</p> <p>Branch coverage determines if your tests cover every possible branch of a control structure, such as an <code>if</code> or <code>case</code> statement.</p>
-    Reports:
-      type: array
-      items:
-        $ref: '#/components/schemas/Report'
-      minItems: 1
-      maxItems: 100
-    ReportStatusType:
-      type: string
-      enum:
-      - GENERATING
-      - SUCCEEDED
-      - FAILED
-      - INCOMPLETE
-      - DELETING
     AccountLimitExceededException: {}
-    ResourceAlreadyExistsException: {}
+    CreateProjectOutput:
+      type: object
+      properties:
+        project:
+          allOf:
+          - $ref: '#/components/schemas/Project'
+          - description: Information about the build project that was created.
     CreateProjectInput:
       type: object
       required:
@@ -7830,20 +7836,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/WrapperInt'
           - description: <p>The maximum number of concurrent builds that are allowed for this project.</p> <p>New builds are only started if the current number of builds is less than or equal to this limit. If the current build count meets this limit, new builds are throttled and are not run.</p>
-    CreateProjectOutput:
-      type: object
-      properties:
-        project:
-          allOf:
-          - $ref: '#/components/schemas/Project'
-          - description: Information about the build project that was created.
-    CreateReportGroupOutput:
-      type: object
-      properties:
-        reportGroup:
-          allOf:
-          - $ref: '#/components/schemas/ReportGroup'
-          - description: ' Information about the report group that was created. '
+    ResourceAlreadyExistsException: {}
     CreateReportGroupInput:
       type: object
       required:
@@ -7868,15 +7861,13 @@ components:
           allOf:
           - $ref: '#/components/schemas/TagList'
           - description: <p> A list of tag key and value pairs associated with this report group. </p> <p>These tags are available for use by Amazon Web Services services that support CodeBuild report group tags.</p>
-    ResourceNotFoundException: {}
-    CreateWebhookOutput:
+    CreateReportGroupOutput:
       type: object
       properties:
-        webhook:
+        reportGroup:
           allOf:
-          - $ref: '#/components/schemas/Webhook'
-          - description: Information about a webhook that connects repository events to a build project in CodeBuild.
-    OAuthProviderException: {}
+          - $ref: '#/components/schemas/ReportGroup'
+          - description: ' Information about the report group that was created. '
     CreateWebhookInput:
       type: object
       required:
@@ -7899,6 +7890,15 @@ components:
           allOf:
           - $ref: '#/components/schemas/WebhookBuildType'
           - description: Specifies the type of build this webhook will trigger.
+    ResourceNotFoundException: {}
+    CreateWebhookOutput:
+      type: object
+      properties:
+        webhook:
+          allOf:
+          - $ref: '#/components/schemas/Webhook'
+          - description: Information about a webhook that connects repository events to a build project in CodeBuild.
+    OAuthProviderException: {}
     DeleteBuildBatchOutput:
       type: object
       properties:
@@ -7924,9 +7924,6 @@ components:
           allOf:
           - $ref: '#/components/schemas/NonEmptyString'
           - description: The identifier of the batch build to delete.
-    DeleteProjectOutput:
-      type: object
-      properties: {}
     DeleteProjectInput:
       type: object
       required:
@@ -7937,6 +7934,9 @@ components:
           allOf:
           - $ref: '#/components/schemas/NonEmptyString'
           - description: The name of the build project.
+    DeleteProjectOutput:
+      type: object
+      properties: {}
     DeleteReportGroupInput:
       type: object
       required:
@@ -7984,6 +7984,9 @@ components:
           allOf:
           - $ref: '#/components/schemas/NonEmptyString'
           - description: ' The Amazon Resource Name (ARN) of the token. '
+    DeleteWebhookOutput:
+      type: object
+      properties: {}
     DeleteWebhookInput:
       type: object
       required:
@@ -7994,18 +7997,6 @@ components:
           allOf:
           - $ref: '#/components/schemas/ProjectName'
           - description: The name of the CodeBuild project.
-    DeleteWebhookOutput:
-      type: object
-      properties: {}
-    PageSize:
-      type: integer
-      minimum: 1
-      maximum: 100
-    SortOrderType:
-      type: string
-      enum:
-      - ASCENDING
-      - DESCENDING
     DescribeCodeCoveragesInput:
       type: object
       required:
@@ -8040,6 +8031,11 @@ components:
           allOf:
           - $ref: '#/components/schemas/Percentage'
           - description: The maximum line coverage percentage to report.
+    SortOrderType:
+      type: string
+      enum:
+      - ASCENDING
+      - DESCENDING
     DescribeCodeCoveragesOutput:
       type: object
       properties:
@@ -8051,6 +8047,11 @@ components:
           allOf:
           - $ref: '#/components/schemas/CodeCoverages'
           - description: An array of <code>CodeCoverage</code> objects that contain the results.
+    ReportCodeCoverageSortByType:
+      type: string
+      enum:
+      - LINE_COVERAGE_PERCENTAGE
+      - FILE_PATH
     CodeCoverage:
       type: object
       properties:
@@ -8099,11 +8100,25 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/CodeCoverage'
-    ReportCodeCoverageSortByType:
-      type: string
-      enum:
-      - LINE_COVERAGE_PERCENTAGE
-      - FILE_PATH
+    PageSize:
+      type: integer
+      minimum: 1
+      maximum: 100
+    TestCases:
+      type: array
+      items:
+        $ref: '#/components/schemas/TestCase'
+    DescribeTestCasesOutput:
+      type: object
+      properties:
+        nextToken:
+          allOf:
+          - $ref: '#/components/schemas/String'
+          - description: ' During a previous call, the maximum number of items that can be returned is the value specified in <code>maxResults</code>. If there more items in the list, then a unique string called a <i>nextToken</i> is returned. To get the next batch of items in the list, call this operation again, adding the next token to the call. To get all of the items in the list, keep calling this operation with each subsequent next token that is returned, until no more next tokens are returned. '
+        testCases:
+          allOf:
+          - $ref: '#/components/schemas/TestCases'
+          - description: ' The returned list of test cases. '
     DescribeTestCasesInput:
       type: object
       required:
@@ -8138,21 +8153,6 @@ components:
           - $ref: '#/components/schemas/String'
           - description: A keyword that is used to filter on the <code>name</code> or the <code>prefix</code> of the test cases. Only test cases where the keyword is a substring of the <code>name</code> or the <code>prefix</code> will be returned.
       description: A filter used to return specific types of test cases. In order to pass the filter, the report must meet all of the filter properties.
-    TestCases:
-      type: array
-      items:
-        $ref: '#/components/schemas/TestCase'
-    DescribeTestCasesOutput:
-      type: object
-      properties:
-        nextToken:
-          allOf:
-          - $ref: '#/components/schemas/String'
-          - description: ' During a previous call, the maximum number of items that can be returned is the value specified in <code>maxResults</code>. If there more items in the list, then a unique string called a <i>nextToken</i> is returned. To get the next batch of items in the list, call this operation again, adding the next token to the call. To get all of the items in the list, keep calling this operation with each subsequent next token that is returned, until no more next tokens are returned. '
-        testCases:
-          allOf:
-          - $ref: '#/components/schemas/TestCases'
-          - description: ' The returned list of test cases. '
     TestCase:
       type: object
       properties:
@@ -8189,49 +8189,6 @@ components:
           - $ref: '#/components/schemas/Timestamp'
           - description: ' The date and time a test case expires. A test case expires 30 days after it is created. An expired test case is not available to view in CodeBuild. '
       description: ' Information about a test case created using a framework such as NUnit or Cucumber. A test case might be a unit test or a configuration test. '
-    ReportGroupTrendStats:
-      type: object
-      properties:
-        average:
-          allOf:
-          - $ref: '#/components/schemas/String'
-          - description: Contains the average of all values analyzed.
-        max:
-          allOf:
-          - $ref: '#/components/schemas/String'
-          - description: Contains the maximum value analyzed.
-        min:
-          allOf:
-          - $ref: '#/components/schemas/String'
-          - description: Contains the minimum value analyzed.
-      description: Contains trend statistics for a set of reports. The actual values depend on the type of trend being collected. For more information, see .
-    ReportWithRawData:
-      type: object
-      properties:
-        reportArn:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          - description: The ARN of the report.
-        data:
-          allOf:
-          - $ref: '#/components/schemas/String'
-          - description: The value of the requested data field from the report.
-      description: Contains the unmodified data for the report. For more information, see .
-    ReportGroupTrendRawDataList:
-      type: array
-      items:
-        $ref: '#/components/schemas/ReportWithRawData'
-    GetReportGroupTrendOutput:
-      type: object
-      properties:
-        stats:
-          allOf:
-          - $ref: '#/components/schemas/ReportGroupTrendStats'
-          - description: Contains the accumulated trend data.
-        rawData:
-          allOf:
-          - $ref: '#/components/schemas/ReportGroupTrendRawDataList'
-          - description: An array that contains the raw data for each report.
     ReportGroupTrendFieldType:
       type: string
       enum:
@@ -8244,6 +8201,33 @@ components:
       - BRANCH_COVERAGE
       - BRANCHES_COVERED
       - BRANCHES_MISSED
+    ReportWithRawData:
+      type: object
+      properties:
+        reportArn:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          - description: The ARN of the report.
+        data:
+          allOf:
+          - $ref: '#/components/schemas/String'
+          - description: The value of the requested data field from the report.
+      description: Contains the unmodified data for the report. For more information, see .
+    GetReportGroupTrendOutput:
+      type: object
+      properties:
+        stats:
+          allOf:
+          - $ref: '#/components/schemas/ReportGroupTrendStats'
+          - description: Contains the accumulated trend data.
+        rawData:
+          allOf:
+          - $ref: '#/components/schemas/ReportGroupTrendRawDataList'
+          - description: An array that contains the raw data for each report.
+    ReportGroupTrendRawDataList:
+      type: array
+      items:
+        $ref: '#/components/schemas/ReportWithRawData'
     GetReportGroupTrendInput:
       type: object
       required:
@@ -8263,6 +8247,22 @@ components:
           allOf:
           - $ref: '#/components/schemas/ReportGroupTrendFieldType'
           - description: <p>The test report value to accumulate. This must be one of the following values:</p> <dl> <dt>Test reports:</dt> <dd> <dl> <dt>DURATION</dt> <dd> <p>Accumulate the test run times for the specified reports.</p> </dd> <dt>PASS_RATE</dt> <dd> <p>Accumulate the percentage of tests that passed for the specified test reports.</p> </dd> <dt>TOTAL</dt> <dd> <p>Accumulate the total number of tests for the specified test reports.</p> </dd> </dl> </dd> </dl> <dl> <dt>Code coverage reports:</dt> <dd> <dl> <dt>BRANCH_COVERAGE</dt> <dd> <p>Accumulate the branch coverage percentages for the specified test reports.</p> </dd> <dt>BRANCHES_COVERED</dt> <dd> <p>Accumulate the branches covered values for the specified test reports.</p> </dd> <dt>BRANCHES_MISSED</dt> <dd> <p>Accumulate the branches missed values for the specified test reports.</p> </dd> <dt>LINE_COVERAGE</dt> <dd> <p>Accumulate the line coverage percentages for the specified test reports.</p> </dd> <dt>LINES_COVERED</dt> <dd> <p>Accumulate the lines covered values for the specified test reports.</p> </dd> <dt>LINES_MISSED</dt> <dd> <p>Accumulate the lines not covered values for the specified test reports.</p> </dd> </dl> </dd> </dl>
+    ReportGroupTrendStats:
+      type: object
+      properties:
+        average:
+          allOf:
+          - $ref: '#/components/schemas/String'
+          - description: Contains the average of all values analyzed.
+        max:
+          allOf:
+          - $ref: '#/components/schemas/String'
+          - description: Contains the maximum value analyzed.
+        min:
+          allOf:
+          - $ref: '#/components/schemas/String'
+          - description: Contains the minimum value analyzed.
+      description: Contains trend statistics for a set of reports. The actual values depend on the type of trend being collected. For more information, see .
     GetResourcePolicyInput:
       type: object
       required:
@@ -8280,6 +8280,12 @@ components:
           allOf:
           - $ref: '#/components/schemas/NonEmptyString'
           - description: ' The resource policy for the resource identified by the input ARN parameter. '
+    AuthType:
+      type: string
+      enum:
+      - OAUTH
+      - BASIC_AUTH
+      - PERSONAL_ACCESS_TOKEN
     ImportSourceCredentialsOutput:
       type: object
       properties:
@@ -8287,12 +8293,6 @@ components:
           allOf:
           - $ref: '#/components/schemas/NonEmptyString'
           - description: ' The Amazon Resource Name (ARN) of the token. '
-    AuthType:
-      type: string
-      enum:
-      - OAUTH
-      - BASIC_AUTH
-      - PERSONAL_ACCESS_TOKEN
     ImportSourceCredentialsInput:
       type: object
       required:
@@ -8321,16 +8321,19 @@ components:
           allOf:
           - $ref: '#/components/schemas/WrapperBoolean'
           - description: ' Set to <code>false</code> to prevent overwriting the repository source credentials. Set to <code>true</code> to overwrite the repository source credentials. The default value is <code>true</code>. '
+    SensitiveNonEmptyString:
+      type: string
+      minLength: 1
+      format: password
     ServerType:
       type: string
       enum:
       - GITHUB
       - BITBUCKET
       - GITHUB_ENTERPRISE
-    SensitiveNonEmptyString:
-      type: string
-      minLength: 1
-      format: password
+    InvalidateProjectCacheOutput:
+      type: object
+      properties: {}
     InvalidateProjectCacheInput:
       type: object
       required:
@@ -8341,28 +8344,6 @@ components:
           allOf:
           - $ref: '#/components/schemas/NonEmptyString'
           - description: The name of the CodeBuild build project that the cache is reset for.
-    InvalidateProjectCacheOutput:
-      type: object
-      properties: {}
-    BuildBatchFilter:
-      type: object
-      properties:
-        status:
-          allOf:
-          - $ref: '#/components/schemas/StatusType'
-          - description: The status of the batch builds to retrieve. Only batch builds that have this status will be retrieved.
-      description: Specifies filters when retrieving batch builds.
-    ListBuildBatchesOutput:
-      type: object
-      properties:
-        ids:
-          allOf:
-          - $ref: '#/components/schemas/BuildBatchIds'
-          - description: An array of strings that contains the batch build identifiers.
-        nextToken:
-          allOf:
-          - $ref: '#/components/schemas/String'
-          - description: If there are more items to return, this contains a token that is passed to a subsequent call to <code>ListBuildBatches</code> to retrieve the next set of items.
     ListBuildBatchesInput:
       type: object
       title: ListBuildBatchesInput
@@ -8383,6 +8364,25 @@ components:
           allOf:
           - $ref: '#/components/schemas/String'
           - description: The <code>nextToken</code> value returned from a previous call to <code>ListBuildBatches</code>. This specifies the next item to return. To return the beginning of the list, exclude this parameter.
+    BuildBatchFilter:
+      type: object
+      properties:
+        status:
+          allOf:
+          - $ref: '#/components/schemas/StatusType'
+          - description: The status of the batch builds to retrieve. Only batch builds that have this status will be retrieved.
+      description: Specifies filters when retrieving batch builds.
+    ListBuildBatchesOutput:
+      type: object
+      properties:
+        ids:
+          allOf:
+          - $ref: '#/components/schemas/BuildBatchIds'
+          - description: An array of strings that contains the batch build identifiers.
+        nextToken:
+          allOf:
+          - $ref: '#/components/schemas/String'
+          - description: If there are more items to return, this contains a token that is passed to a subsequent call to <code>ListBuildBatches</code> to retrieve the next set of items.
     ListBuildBatchesForProjectInput:
       type: object
       title: ListBuildBatchesForProjectInput
@@ -8418,17 +8418,6 @@ components:
           allOf:
           - $ref: '#/components/schemas/String'
           - description: If there are more items to return, this contains a token that is passed to a subsequent call to <code>ListBuildBatchesForProject</code> to retrieve the next set of items.
-    ListBuildsForProjectOutput:
-      type: object
-      properties:
-        ids:
-          allOf:
-          - $ref: '#/components/schemas/BuildIds'
-          - description: A list of build identifiers for the specified build project, with each build ID representing a single build.
-        nextToken:
-          allOf:
-          - $ref: '#/components/schemas/String'
-          - description: If there are more than 100 items in the list, only the first 100 items are returned, along with a unique string called a <i>nextToken</i>. To get the next batch of items in the list, call this operation again, adding the next token to the call.
     ListBuildsForProjectInput:
       type: object
       required:
@@ -8447,6 +8436,63 @@ components:
           allOf:
           - $ref: '#/components/schemas/String'
           - description: During a previous call, if there are more than 100 items in the list, only the first 100 items are returned, along with a unique string called a <i>nextToken</i>. To get the next batch of items in the list, call this operation again, adding the next token to the call. To get all of the items in the list, keep calling this operation with each subsequent next token that is returned, until no more next tokens are returned.
+    ListBuildsForProjectOutput:
+      type: object
+      properties:
+        ids:
+          allOf:
+          - $ref: '#/components/schemas/BuildIds'
+          - description: A list of build identifiers for the specified build project, with each build ID representing a single build.
+        nextToken:
+          allOf:
+          - $ref: '#/components/schemas/String'
+          - description: If there are more than 100 items in the list, only the first 100 items are returned, along with a unique string called a <i>nextToken</i>. To get the next batch of items in the list, call this operation again, adding the next token to the call.
+    EnvironmentImages:
+      type: array
+      items:
+        $ref: '#/components/schemas/EnvironmentImage'
+    EnvironmentPlatform:
+      type: object
+      properties:
+        platform:
+          allOf:
+          - $ref: '#/components/schemas/PlatformType'
+          - description: The platform's name.
+        languages:
+          allOf:
+          - $ref: '#/components/schemas/EnvironmentLanguages'
+          - description: The list of programming languages that are available for the specified platform.
+      description: A set of Docker images that are related by platform and are managed by CodeBuild.
+    PlatformType:
+      type: string
+      enum:
+      - DEBIAN
+      - AMAZON_LINUX
+      - UBUNTU
+      - WINDOWS_SERVER
+    EnvironmentLanguages:
+      type: array
+      items:
+        $ref: '#/components/schemas/EnvironmentLanguage'
+    ImageVersions:
+      type: array
+      items:
+        $ref: '#/components/schemas/String'
+    ListCuratedEnvironmentImagesInput:
+      type: object
+      title: ListCuratedEnvironmentImagesInput
+      properties: {}
+    ListCuratedEnvironmentImagesOutput:
+      type: object
+      properties:
+        platforms:
+          allOf:
+          - $ref: '#/components/schemas/EnvironmentPlatforms'
+          - description: Information about supported platforms for Docker images that are managed by CodeBuild.
+    EnvironmentPlatforms:
+      type: array
+      items:
+        $ref: '#/components/schemas/EnvironmentPlatform'
     EnvironmentLanguage:
       type: object
       properties:
@@ -8459,21 +8505,19 @@ components:
           - $ref: '#/components/schemas/EnvironmentImages'
           - description: The list of Docker images that are related by the specified programming language.
       description: A set of Docker images that are related by programming language and are managed by CodeBuild.
-    ImageVersions:
-      type: array
-      items:
-        $ref: '#/components/schemas/String'
-    PlatformType:
+    LanguageType:
       type: string
       enum:
-      - DEBIAN
-      - AMAZON_LINUX
-      - UBUNTU
-      - WINDOWS_SERVER
-    ListCuratedEnvironmentImagesInput:
-      type: object
-      title: ListCuratedEnvironmentImagesInput
-      properties: {}
+      - JAVA
+      - PYTHON
+      - NODE_JS
+      - RUBY
+      - GOLANG
+      - DOCKER
+      - ANDROID
+      - DOTNET
+      - BASE
+      - PHP
     EnvironmentImage:
       type: object
       properties:
@@ -8490,50 +8534,6 @@ components:
           - $ref: '#/components/schemas/ImageVersions'
           - description: A list of environment image versions.
       description: Information about a Docker image that is managed by CodeBuild.
-    EnvironmentPlatform:
-      type: object
-      properties:
-        platform:
-          allOf:
-          - $ref: '#/components/schemas/PlatformType'
-          - description: The platform's name.
-        languages:
-          allOf:
-          - $ref: '#/components/schemas/EnvironmentLanguages'
-          - description: The list of programming languages that are available for the specified platform.
-      description: A set of Docker images that are related by platform and are managed by CodeBuild.
-    EnvironmentPlatforms:
-      type: array
-      items:
-        $ref: '#/components/schemas/EnvironmentPlatform'
-    EnvironmentImages:
-      type: array
-      items:
-        $ref: '#/components/schemas/EnvironmentImage'
-    ListCuratedEnvironmentImagesOutput:
-      type: object
-      properties:
-        platforms:
-          allOf:
-          - $ref: '#/components/schemas/EnvironmentPlatforms'
-          - description: Information about supported platforms for Docker images that are managed by CodeBuild.
-    EnvironmentLanguages:
-      type: array
-      items:
-        $ref: '#/components/schemas/EnvironmentLanguage'
-    LanguageType:
-      type: string
-      enum:
-      - JAVA
-      - PYTHON
-      - NODE_JS
-      - RUBY
-      - GOLANG
-      - DOCKER
-      - ANDROID
-      - DOTNET
-      - BASE
-      - PHP
     ListReportGroupsOutput:
       type: object
       properties:
@@ -8571,25 +8571,6 @@ components:
           allOf:
           - $ref: '#/components/schemas/PageSize'
           - description: ' The maximum number of paginated report groups returned per response. Use <code>nextToken</code> to iterate pages in the list of returned <code>ReportGroup</code> objects. The default value is 100. '
-    ReportFilter:
-      type: object
-      properties:
-        status:
-          allOf:
-          - $ref: '#/components/schemas/ReportStatusType'
-          - description: ' The status used to filter reports. You can filter using one status only. '
-      description: ' A filter used to return reports with the status specified by the input <code>status</code> parameter. '
-    ListReportsForReportGroupOutput:
-      type: object
-      properties:
-        nextToken:
-          allOf:
-          - $ref: '#/components/schemas/String'
-          - description: ' During a previous call, the maximum number of items that can be returned is the value specified in <code>maxResults</code>. If there more items in the list, then a unique string called a <i>nextToken</i> is returned. To get the next batch of items in the list, call this operation again, adding the next token to the call. To get all of the items in the list, keep calling this operation with each subsequent next token that is returned, until no more next tokens are returned. '
-        reports:
-          allOf:
-          - $ref: '#/components/schemas/ReportArns'
-          - description: ' The list of report ARNs. '
     ListReportsForReportGroupInput:
       type: object
       required:
@@ -8616,6 +8597,47 @@ components:
           allOf:
           - $ref: '#/components/schemas/ReportFilter'
           - description: ' A <code>ReportFilter</code> object used to filter the returned reports. '
+    ListReportsForReportGroupOutput:
+      type: object
+      properties:
+        nextToken:
+          allOf:
+          - $ref: '#/components/schemas/String'
+          - description: ' During a previous call, the maximum number of items that can be returned is the value specified in <code>maxResults</code>. If there more items in the list, then a unique string called a <i>nextToken</i> is returned. To get the next batch of items in the list, call this operation again, adding the next token to the call. To get all of the items in the list, keep calling this operation with each subsequent next token that is returned, until no more next tokens are returned. '
+        reports:
+          allOf:
+          - $ref: '#/components/schemas/ReportArns'
+          - description: ' The list of report ARNs. '
+    ReportFilter:
+      type: object
+      properties:
+        status:
+          allOf:
+          - $ref: '#/components/schemas/ReportStatusType'
+          - description: ' The status used to filter reports. You can filter using one status only. '
+      description: ' A filter used to return reports with the status specified by the input <code>status</code> parameter. '
+    SharedResourceSortByType:
+      type: string
+      enum:
+      - ARN
+      - MODIFIED_TIME
+    ListSharedProjectsOutput:
+      type: object
+      properties:
+        nextToken:
+          allOf:
+          - $ref: '#/components/schemas/String'
+          - description: ' During a previous call, the maximum number of items that can be returned is the value specified in <code>maxResults</code>. If there more items in the list, then a unique string called a <i>nextToken</i> is returned. To get the next batch of items in the list, call this operation again, adding the next token to the call. To get all of the items in the list, keep calling this operation with each subsequent next token that is returned, until no more next tokens are returned. '
+        projects:
+          allOf:
+          - $ref: '#/components/schemas/ProjectArns'
+          - description: ' The list of ARNs for the build projects shared with the current Amazon Web Services account or user. '
+    ProjectArns:
+      type: array
+      items:
+        $ref: '#/components/schemas/NonEmptyString'
+      minItems: 1
+      maxItems: 100
     ListSharedProjectsInput:
       type: object
       title: ListSharedProjectsInput
@@ -8636,28 +8658,6 @@ components:
           allOf:
           - $ref: '#/components/schemas/NonEmptyString'
           - description: ' During a previous call, the maximum number of items that can be returned is the value specified in <code>maxResults</code>. If there more items in the list, then a unique string called a <i>nextToken</i> is returned. To get the next batch of items in the list, call this operation again, adding the next token to the call. To get all of the items in the list, keep calling this operation with each subsequent next token that is returned, until no more next tokens are returned. '
-    ListSharedProjectsOutput:
-      type: object
-      properties:
-        nextToken:
-          allOf:
-          - $ref: '#/components/schemas/String'
-          - description: ' During a previous call, the maximum number of items that can be returned is the value specified in <code>maxResults</code>. If there more items in the list, then a unique string called a <i>nextToken</i> is returned. To get the next batch of items in the list, call this operation again, adding the next token to the call. To get all of the items in the list, keep calling this operation with each subsequent next token that is returned, until no more next tokens are returned. '
-        projects:
-          allOf:
-          - $ref: '#/components/schemas/ProjectArns'
-          - description: ' The list of ARNs for the build projects shared with the current Amazon Web Services account or user. '
-    ProjectArns:
-      type: array
-      items:
-        $ref: '#/components/schemas/NonEmptyString'
-      minItems: 1
-      maxItems: 100
-    SharedResourceSortByType:
-      type: string
-      enum:
-      - ARN
-      - MODIFIED_TIME
     ListSharedReportGroupsOutput:
       type: object
       properties:
@@ -8689,6 +8689,17 @@ components:
           allOf:
           - $ref: '#/components/schemas/PageSize'
           - description: ' The maximum number of paginated shared report groups per response. Use <code>nextToken</code> to iterate pages in the list of returned <code>ReportGroup</code> objects. The default value is 100. '
+    ListSourceCredentialsOutput:
+      type: object
+      properties:
+        sourceCredentialsInfos:
+          allOf:
+          - $ref: '#/components/schemas/SourceCredentialsInfos'
+          - description: ' A list of <code>SourceCredentialsInfo</code> objects. Each <code>SourceCredentialsInfo</code> object includes the authentication type, token ARN, and type of source provider for one set of credentials. '
+    ListSourceCredentialsInput:
+      type: object
+      title: ListSourceCredentialsInput
+      properties: {}
     SourceCredentialsInfo:
       type: object
       properties:
@@ -8705,21 +8716,10 @@ components:
           - $ref: '#/components/schemas/AuthType'
           - description: ' The type of authentication used by the credentials. Valid options are OAUTH, BASIC_AUTH, or PERSONAL_ACCESS_TOKEN. '
       description: ' Information about the credentials for a GitHub, GitHub Enterprise, or Bitbucket repository. '
-    ListSourceCredentialsInput:
-      type: object
-      title: ListSourceCredentialsInput
-      properties: {}
     SourceCredentialsInfos:
       type: array
       items:
         $ref: '#/components/schemas/SourceCredentialsInfo'
-    ListSourceCredentialsOutput:
-      type: object
-      properties:
-        sourceCredentialsInfos:
-          allOf:
-          - $ref: '#/components/schemas/SourceCredentialsInfos'
-          - description: ' A list of <code>SourceCredentialsInfo</code> objects. Each <code>SourceCredentialsInfo</code> object includes the authentication type, token ARN, and type of source provider for one set of credentials. '
     PutResourcePolicyInput:
       type: object
       required:
@@ -8742,16 +8742,16 @@ components:
           allOf:
           - $ref: '#/components/schemas/NonEmptyString'
           - description: ' The ARN of the <code>Project</code> or <code>ReportGroup</code> resource that is associated with a resource policy. '
-    RetryBuildBatchOutput:
-      type: object
-      properties:
-        buildBatch:
-          $ref: '#/components/schemas/BuildBatch'
     RetryBuildBatchType:
       type: string
       enum:
       - RETRY_ALL_BUILDS
       - RETRY_FAILED_BUILDS
+    RetryBuildBatchOutput:
+      type: object
+      properties:
+        buildBatch:
+          $ref: '#/components/schemas/BuildBatch'
     RetryBuildBatchInput:
       type: object
       title: RetryBuildBatchInput
@@ -9007,6 +9007,19 @@ components:
           allOf:
           - $ref: '#/components/schemas/WrapperInt'
           - description: <p>The maximum number of concurrent builds that are allowed for this project.</p> <p>New builds are only started if the current number of builds is less than or equal to this limit. If the current build count meets this limit, new builds are throttled and are not run.</p> <p>To remove this limit, set this value to -1.</p>
+    UpdateProjectVisibilityOutput:
+      type: object
+      properties:
+        projectArn:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          - description: The Amazon Resource Name (ARN) of the build project.
+        publicProjectAlias:
+          allOf:
+          - $ref: '#/components/schemas/NonEmptyString'
+          - description: 'Contains the project identifier used with the public build APIs. '
+        projectVisibility:
+          $ref: '#/components/schemas/ProjectVisibilityType'
     UpdateProjectVisibilityInput:
       type: object
       required:
@@ -9024,19 +9037,6 @@ components:
           allOf:
           - $ref: '#/components/schemas/NonEmptyString'
           - description: The ARN of the IAM role that enables CodeBuild to access the CloudWatch Logs and Amazon S3 artifacts for the project's builds.
-    UpdateProjectVisibilityOutput:
-      type: object
-      properties:
-        projectArn:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          - description: The Amazon Resource Name (ARN) of the build project.
-        publicProjectAlias:
-          allOf:
-          - $ref: '#/components/schemas/NonEmptyString'
-          - description: 'Contains the project identifier used with the public build APIs. '
-        projectVisibility:
-          $ref: '#/components/schemas/ProjectVisibilityType'
     UpdateReportGroupOutput:
       type: object
       properties:
@@ -9096,24 +9096,6 @@ components:
           - $ref: '#/components/schemas/WebhookBuildType'
           - description: Specifies the type of build this webhook will trigger.
   parameters:
-    X-Amz-Security-Token:
-      name: X-Amz-Security-Token
-      in: header
-      schema:
-        type: string
-      required: false
-    X-Amz-Signature:
-      name: X-Amz-Signature
-      in: header
-      schema:
-        type: string
-      required: false
-    X-Amz-SignedHeaders:
-      name: X-Amz-SignedHeaders
-      in: header
-      schema:
-        type: string
-      required: false
     X-Amz-Credential:
       name: X-Amz-Credential
       in: header
@@ -9132,8 +9114,26 @@ components:
       schema:
         type: string
       required: false
+    X-Amz-SignedHeaders:
+      name: X-Amz-SignedHeaders
+      in: header
+      schema:
+        type: string
+      required: false
     X-Amz-Content-Sha256:
       name: X-Amz-Content-Sha256
+      in: header
+      schema:
+        type: string
+      required: false
+    X-Amz-Signature:
+      name: X-Amz-Signature
+      in: header
+      schema:
+        type: string
+      required: false
+    X-Amz-Security-Token:
+      name: X-Amz-Security-Token
       in: header
       schema:
         type: string

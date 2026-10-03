@@ -188,14 +188,27 @@ paths:
       - 'AWS CodeBuild #X Amz Target=CodeBuild 20161006.ListBuilds…'
 components:
   schemas:
-    SortOrderType:
-      type: string
-      enum:
-      - ASCENDING
-      - DESCENDING
+    ListBuildsOutput:
+      type: object
+      properties:
+        ids:
+          allOf:
+          - $ref: '#/components/schemas/BuildIds'
+          - description: A list of build IDs, with each build ID representing a single build.
+        nextToken:
+          allOf:
+          - $ref: '#/components/schemas/String'
+          - description: If there are more than 100 items in the list, only the first 100 items are returned, along with a unique string called a <i>nextToken</i>. To get the next batch of items in the list, call this operation again, adding the next token to the call.
     NonEmptyString:
       type: string
       minLength: 1
+    BuildIds:
+      type: array
+      items:
+        $ref: '#/components/schemas/NonEmptyString'
+      minItems: 1
+      maxItems: 100
+    InvalidInputException: {}
     ListBuildsInput:
       type: object
       title: ListBuildsInput
@@ -208,45 +221,14 @@ components:
           allOf:
           - $ref: '#/components/schemas/String'
           - description: During a previous call, if there are more than 100 items in the list, only the first 100 items are returned, along with a unique string called a <i>nextToken</i>. To get the next batch of items in the list, call this operation again, adding the next token to the call. To get all of the items in the list, keep calling this operation with each subsequent next token that is returned, until no more next tokens are returned.
-    ListBuildsOutput:
-      type: object
-      properties:
-        ids:
-          allOf:
-          - $ref: '#/components/schemas/BuildIds'
-          - description: A list of build IDs, with each build ID representing a single build.
-        nextToken:
-          allOf:
-          - $ref: '#/components/schemas/String'
-          - description: If there are more than 100 items in the list, only the first 100 items are returned, along with a unique string called a <i>nextToken</i>. To get the next batch of items in the list, call this operation again, adding the next token to the call.
+    SortOrderType:
+      type: string
+      enum:
+      - ASCENDING
+      - DESCENDING
     String:
       type: string
-    BuildIds:
-      type: array
-      items:
-        $ref: '#/components/schemas/NonEmptyString'
-      minItems: 1
-      maxItems: 100
-    InvalidInputException: {}
   parameters:
-    X-Amz-Security-Token:
-      name: X-Amz-Security-Token
-      in: header
-      schema:
-        type: string
-      required: false
-    X-Amz-Signature:
-      name: X-Amz-Signature
-      in: header
-      schema:
-        type: string
-      required: false
-    X-Amz-SignedHeaders:
-      name: X-Amz-SignedHeaders
-      in: header
-      schema:
-        type: string
-      required: false
     X-Amz-Credential:
       name: X-Amz-Credential
       in: header
@@ -265,8 +247,26 @@ components:
       schema:
         type: string
       required: false
+    X-Amz-SignedHeaders:
+      name: X-Amz-SignedHeaders
+      in: header
+      schema:
+        type: string
+      required: false
     X-Amz-Content-Sha256:
       name: X-Amz-Content-Sha256
+      in: header
+      schema:
+        type: string
+      required: false
+    X-Amz-Signature:
+      name: X-Amz-Signature
+      in: header
+      schema:
+        type: string
+      required: false
+    X-Amz-Security-Token:
+      name: X-Amz-Security-Token
       in: header
       schema:
         type: string
