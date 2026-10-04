@@ -225,35 +225,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    CreateProjectResponse:
-      type: object
-      properties:
-        project:
-          $ref: '#/components/schemas/Project'
-    ResourceAlreadyExistsException:
-      type: object
-      properties:
-        message:
-          type: string
-    InternalServerException:
-      type: object
-      properties:
-        message:
-          type: string
-    InvalidInputException:
-      type: object
-      properties:
-        message:
-          type: string
-    ListProjectsResponse:
-      type: object
-      properties:
-        projects:
-          type: array
-          items:
-            type: string
-        nextToken:
-          type: string
     Project:
       type: object
       properties:
@@ -270,6 +241,35 @@ components:
           type: string
           format: date-time
         serviceRole:
+          type: string
+    InternalServerException:
+      type: object
+      properties:
+        message:
+          type: string
+    CreateProjectResponse:
+      type: object
+      properties:
+        project:
+          $ref: '#/components/schemas/Project'
+    ListProjectsResponse:
+      type: object
+      properties:
+        projects:
+          type: array
+          items:
+            type: string
+        nextToken:
+          type: string
+    InvalidInputException:
+      type: object
+      properties:
+        message:
+          type: string
+    ResourceAlreadyExistsException:
+      type: object
+      properties:
+        message:
           type: string
     CreateProjectRequest:
       type: object

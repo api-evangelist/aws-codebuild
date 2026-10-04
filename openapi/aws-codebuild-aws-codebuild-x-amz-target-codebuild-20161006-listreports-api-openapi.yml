@@ -196,23 +196,17 @@ paths:
       - 'AWS CodeBuild #X Amz Target=CodeBuild 20161006.ListReports…'
 components:
   schemas:
-    ReportStatusType:
+    NonEmptyString:
       type: string
-      enum:
-      - GENERATING
-      - SUCCEEDED
-      - FAILED
-      - INCOMPLETE
-      - DELETING
+      minLength: 1
     ReportArns:
       type: array
       items:
         $ref: '#/components/schemas/NonEmptyString'
       minItems: 1
       maxItems: 100
-    NonEmptyString:
+    String:
       type: string
-      minLength: 1
     ListReportsInput:
       type: object
       title: ListReportsInput
@@ -233,7 +227,20 @@ components:
           allOf:
           - $ref: '#/components/schemas/ReportFilter'
           - description: ' A <code>ReportFilter</code> object used to filter the returned reports. '
+    ReportStatusType:
+      type: string
+      enum:
+      - GENERATING
+      - SUCCEEDED
+      - FAILED
+      - INCOMPLETE
+      - DELETING
     InvalidInputException: {}
+    SortOrderType:
+      type: string
+      enum:
+      - ASCENDING
+      - DESCENDING
     ListReportsOutput:
       type: object
       properties:
@@ -245,13 +252,10 @@ components:
           allOf:
           - $ref: '#/components/schemas/ReportArns'
           - description: ' The list of returned ARNs for the reports in the current Amazon Web Services account. '
-    SortOrderType:
-      type: string
-      enum:
-      - ASCENDING
-      - DESCENDING
-    String:
-      type: string
+    PageSize:
+      type: integer
+      minimum: 1
+      maximum: 100
     ReportFilter:
       type: object
       properties:
@@ -260,19 +264,9 @@ components:
           - $ref: '#/components/schemas/ReportStatusType'
           - description: ' The status used to filter reports. You can filter using one status only. '
       description: ' A filter used to return reports with the status specified by the input <code>status</code> parameter. '
-    PageSize:
-      type: integer
-      minimum: 1
-      maximum: 100
   parameters:
-    X-Amz-Algorithm:
-      name: X-Amz-Algorithm
-      in: header
-      schema:
-        type: string
-      required: false
-    X-Amz-Credential:
-      name: X-Amz-Credential
+    X-Amz-Security-Token:
+      name: X-Amz-Security-Token
       in: header
       schema:
         type: string
@@ -283,8 +277,8 @@ components:
       schema:
         type: string
       required: false
-    X-Amz-SignedHeaders:
-      name: X-Amz-SignedHeaders
+    X-Amz-Credential:
+      name: X-Amz-Credential
       in: header
       schema:
         type: string
@@ -295,14 +289,20 @@ components:
       schema:
         type: string
       required: false
+    X-Amz-Algorithm:
+      name: X-Amz-Algorithm
+      in: header
+      schema:
+        type: string
+      required: false
     X-Amz-Signature:
       name: X-Amz-Signature
       in: header
       schema:
         type: string
       required: false
-    X-Amz-Security-Token:
-      name: X-Amz-Security-Token
+    X-Amz-SignedHeaders:
+      name: X-Amz-SignedHeaders
       in: header
       schema:
         type: string

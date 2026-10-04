@@ -267,11 +267,33 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    StartBuildResponse:
+    StartBuildRequest:
+      type: object
+      required:
+      - projectName
+      properties:
+        projectName:
+          type: string
+          description: The name of the CodeBuild build project.
+        sourceVersion:
+          type: string
+          description: The version of the build input to be built.
+        environmentVariablesOverride:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              value:
+                type: string
+              type:
+                type: string
+    InternalServerException:
       type: object
       properties:
-        build:
-          $ref: '#/components/schemas/Build'
+        message:
+          type: string
     Build:
       type: object
       properties:
@@ -302,48 +324,6 @@ components:
           type: string
         sourceVersion:
           type: string
-    ResourceNotFoundException:
-      type: object
-      properties:
-        message:
-          type: string
-    InternalServerException:
-      type: object
-      properties:
-        message:
-          type: string
-    InvalidInputException:
-      type: object
-      properties:
-        message:
-          type: string
-    StartBuildRequest:
-      type: object
-      required:
-      - projectName
-      properties:
-        projectName:
-          type: string
-          description: The name of the CodeBuild build project.
-        sourceVersion:
-          type: string
-          description: The version of the build input to be built.
-        environmentVariablesOverride:
-          type: array
-          items:
-            type: object
-            properties:
-              name:
-                type: string
-              value:
-                type: string
-              type:
-                type: string
-    StopBuildResponse:
-      type: object
-      properties:
-        build:
-          $ref: '#/components/schemas/Build'
     BatchGetBuildsResponse:
       type: object
       properties:
@@ -355,6 +335,26 @@ components:
           type: array
           items:
             type: string
+    StartBuildResponse:
+      type: object
+      properties:
+        build:
+          $ref: '#/components/schemas/Build'
+    StopBuildResponse:
+      type: object
+      properties:
+        build:
+          $ref: '#/components/schemas/Build'
+    InvalidInputException:
+      type: object
+      properties:
+        message:
+          type: string
+    ResourceNotFoundException:
+      type: object
+      properties:
+        message:
+          type: string
 externalDocs:
   description: Amazon CodeBuild API Reference
   url: https://docs.aws.amazon.com/codebuild/latest/APIReference/
