@@ -189,15 +189,23 @@ paths:
       - 'AWS CodeBuild #X Amz Target=CodeBuild 20161006.ListProjects…'
 components:
   schemas:
-    NonEmptyString:
-      type: string
-      minLength: 1
-    ProjectSortByType:
+    ListProjectsOutput:
+      type: object
+      properties:
+        nextToken:
+          allOf:
+          - $ref: '#/components/schemas/String'
+          - description: If there are more than 100 items in the list, only the first 100 items are returned, along with a unique string called a <i>nextToken</i>. To get the next batch of items in the list, call this operation again, adding the next token to the call.
+        projects:
+          allOf:
+          - $ref: '#/components/schemas/ProjectNames'
+          - description: The list of build project names, with each build project name representing a single build project.
+    SortOrderType:
       type: string
       enum:
-      - NAME
-      - CREATED_TIME
-      - LAST_MODIFIED_TIME
+      - ASCENDING
+      - DESCENDING
+    InvalidInputException: {}
     ListProjectsInput:
       type: object
       title: ListProjectsInput
@@ -214,40 +222,44 @@ components:
           allOf:
           - $ref: '#/components/schemas/NonEmptyString'
           - description: During a previous call, if there are more than 100 items in the list, only the first 100 items are returned, along with a unique string called a <i>nextToken</i>. To get the next batch of items in the list, call this operation again, adding the next token to the call. To get all of the items in the list, keep calling this operation with each subsequent next token that is returned, until no more next tokens are returned.
+    NonEmptyString:
+      type: string
+      minLength: 1
     String:
       type: string
+    ProjectSortByType:
+      type: string
+      enum:
+      - NAME
+      - CREATED_TIME
+      - LAST_MODIFIED_TIME
     ProjectNames:
       type: array
       items:
         $ref: '#/components/schemas/NonEmptyString'
       minItems: 1
       maxItems: 100
-    SortOrderType:
-      type: string
-      enum:
-      - ASCENDING
-      - DESCENDING
-    InvalidInputException: {}
-    ListProjectsOutput:
-      type: object
-      properties:
-        nextToken:
-          allOf:
-          - $ref: '#/components/schemas/String'
-          - description: If there are more than 100 items in the list, only the first 100 items are returned, along with a unique string called a <i>nextToken</i>. To get the next batch of items in the list, call this operation again, adding the next token to the call.
-        projects:
-          allOf:
-          - $ref: '#/components/schemas/ProjectNames'
-          - description: The list of build project names, with each build project name representing a single build project.
   parameters:
+    X-Amz-Algorithm:
+      name: X-Amz-Algorithm
+      in: header
+      schema:
+        type: string
+      required: false
     X-Amz-Security-Token:
       name: X-Amz-Security-Token
       in: header
       schema:
         type: string
       required: false
-    X-Amz-Date:
-      name: X-Amz-Date
+    X-Amz-SignedHeaders:
+      name: X-Amz-SignedHeaders
+      in: header
+      schema:
+        type: string
+      required: false
+    X-Amz-Signature:
+      name: X-Amz-Signature
       in: header
       schema:
         type: string
@@ -264,20 +276,8 @@ components:
       schema:
         type: string
       required: false
-    X-Amz-Algorithm:
-      name: X-Amz-Algorithm
-      in: header
-      schema:
-        type: string
-      required: false
-    X-Amz-Signature:
-      name: X-Amz-Signature
-      in: header
-      schema:
-        type: string
-      required: false
-    X-Amz-SignedHeaders:
-      name: X-Amz-SignedHeaders
+    X-Amz-Date:
+      name: X-Amz-Date
       in: header
       schema:
         type: string

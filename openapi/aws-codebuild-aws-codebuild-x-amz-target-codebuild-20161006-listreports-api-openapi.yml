@@ -196,17 +196,21 @@ paths:
       - 'AWS CodeBuild #X Amz Target=CodeBuild 20161006.ListReports…'
 components:
   schemas:
-    NonEmptyString:
-      type: string
-      minLength: 1
     ReportArns:
       type: array
       items:
         $ref: '#/components/schemas/NonEmptyString'
       minItems: 1
       maxItems: 100
-    String:
+    SortOrderType:
       type: string
+      enum:
+      - ASCENDING
+      - DESCENDING
+    InvalidInputException: {}
+    NonEmptyString:
+      type: string
+      minLength: 1
     ListReportsInput:
       type: object
       title: ListReportsInput
@@ -227,20 +231,8 @@ components:
           allOf:
           - $ref: '#/components/schemas/ReportFilter'
           - description: ' A <code>ReportFilter</code> object used to filter the returned reports. '
-    ReportStatusType:
+    String:
       type: string
-      enum:
-      - GENERATING
-      - SUCCEEDED
-      - FAILED
-      - INCOMPLETE
-      - DELETING
-    InvalidInputException: {}
-    SortOrderType:
-      type: string
-      enum:
-      - ASCENDING
-      - DESCENDING
     ListReportsOutput:
       type: object
       properties:
@@ -256,6 +248,14 @@ components:
       type: integer
       minimum: 1
       maximum: 100
+    ReportStatusType:
+      type: string
+      enum:
+      - GENERATING
+      - SUCCEEDED
+      - FAILED
+      - INCOMPLETE
+      - DELETING
     ReportFilter:
       type: object
       properties:
@@ -265,14 +265,26 @@ components:
           - description: ' The status used to filter reports. You can filter using one status only. '
       description: ' A filter used to return reports with the status specified by the input <code>status</code> parameter. '
   parameters:
+    X-Amz-Algorithm:
+      name: X-Amz-Algorithm
+      in: header
+      schema:
+        type: string
+      required: false
     X-Amz-Security-Token:
       name: X-Amz-Security-Token
       in: header
       schema:
         type: string
       required: false
-    X-Amz-Date:
-      name: X-Amz-Date
+    X-Amz-SignedHeaders:
+      name: X-Amz-SignedHeaders
+      in: header
+      schema:
+        type: string
+      required: false
+    X-Amz-Signature:
+      name: X-Amz-Signature
       in: header
       schema:
         type: string
@@ -289,20 +301,8 @@ components:
       schema:
         type: string
       required: false
-    X-Amz-Algorithm:
-      name: X-Amz-Algorithm
-      in: header
-      schema:
-        type: string
-      required: false
-    X-Amz-Signature:
-      name: X-Amz-Signature
-      in: header
-      schema:
-        type: string
-      required: false
-    X-Amz-SignedHeaders:
-      name: X-Amz-SignedHeaders
+    X-Amz-Date:
+      name: X-Amz-Date
       in: header
       schema:
         type: string
