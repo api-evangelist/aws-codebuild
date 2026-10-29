@@ -1,4 +1,4 @@
-# AWS CodeBuild (aws-codebuild)
+# AWS CodeBuild
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,67 +66,118 @@
 
 AWS CodeBuild is a fully managed continuous integration build service that compiles source code, runs unit tests, and produces deployable artifacts. It eliminates the need to provision, manage, and scale build servers by providing prepackaged build environments for popular languages and tools, and scales automatically to meet peak build requests. The CodeBuild API uses AWS Signature Version 4 (SigV4) authentication and is accessed via SDKs, the AWS CLI, or direct HTTPS calls to regional service endpoints.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/aws-codebuild/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/aws-codebuild/refs/heads/main/apis.yml)
+**Areas:** AWS · Builds · CI/CD · Continuous Integration · Developer Tools · DevOps
 
-## Scope
+## AWS CodeBuild on APIs.io
 
-- **Type:** Index
+Everything profiled for AWS CodeBuild is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/aws-codebuild/](https://apis.io/providers/aws-codebuild/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (14)
 
-- AWS
-- Build
-- CI/CD
-- Continuous Integration
-- Developer Tools
-- DevOps
+- [AWS CodeBuild AWS CodeBuild API](https://apis.io/apis/aws-codebuild/aws-codebuild-aws-codebuild-api-api/) — The AWS CodeBuild API API from AWS CodeBuild — 1 operation(s) for aws codebuild api.
+- [AWS CodeBuild AWS CodeBuild #X Amz Target=CodeBuild 20161006.DeleteReport… API](https://apis.io/apis/aws-codebuild/aws-codebuild-aws-codebuild-x-amz-target-codebuild-20161006-deletereport-api/) — The AWS CodeBuild #X Amz Target=CodeBuild 20161006.DeleteReport… API from AWS CodeBuild — 1 operation(s) for aws codebuild #x amz target=codebuild…
+- [AWS CodeBuild AWS CodeBuild #X Amz Target=CodeBuild 20161006.ListBuilds… API](https://apis.io/apis/aws-codebuild/aws-codebuild-aws-codebuild-x-amz-target-codebuild-20161006-listbuilds-api/) — The AWS CodeBuild #X Amz Target=CodeBuild 20161006.ListBuilds… API from AWS CodeBuild — 1 operation(s) for aws codebuild #x amz target=codebuild…
+- [AWS CodeBuild AWS CodeBuild #X Amz Target=CodeBuild 20161006.ListProjects… API](https://apis.io/apis/aws-codebuild/aws-codebuild-aws-codebuild-x-amz-target-codebuild-20161006-listprojects-api/) — The AWS CodeBuild #X Amz Target=CodeBuild 20161006.ListProjects… API from AWS CodeBuild — 1 operation(s) for aws codebuild #x amz target=codebuild…
+- [AWS CodeBuild AWS CodeBuild #X Amz Target=CodeBuild 20161006.ListReports… API](https://apis.io/apis/aws-codebuild/aws-codebuild-aws-codebuild-x-amz-target-codebuild-20161006-listreports-api/) — The AWS CodeBuild #X Amz Target=CodeBuild 20161006.ListReports… API from AWS CodeBuild — 1 operation(s) for aws codebuild #x amz target=codebuild…
+- [AWS CodeBuild AWS CodeBuild #X Amz Target=CodeBuild 20161006.RetryBuild… API](https://apis.io/apis/aws-codebuild/aws-codebuild-aws-codebuild-x-amz-target-codebuild-20161006-retrybuild-api/) — The AWS CodeBuild #X Amz Target=CodeBuild 20161006.RetryBuild… API from AWS CodeBuild — 1 operation(s) for aws codebuild #x amz target=codebuild…
+- [AWS CodeBuild AWS CodeBuild #X Amz Target=CodeBuild 20161006.StartBuild… API](https://apis.io/apis/aws-codebuild/aws-codebuild-aws-codebuild-x-amz-target-codebuild-20161006-startbuild-api/) — The AWS CodeBuild #X Amz Target=CodeBuild 20161006.StartBuild… API from AWS CodeBuild — 1 operation(s) for aws codebuild #x amz target=codebuild…
+- [AWS CodeBuild AWS CodeBuild #X Amz Target=CodeBuild 20161006.StopBuild API](https://apis.io/apis/aws-codebuild/aws-codebuild-aws-codebuild-x-amz-target-codebuild-20161006-stopbuild-api-api/) — The AWS CodeBuild #X Amz Target=CodeBuild 20161006.StopBuild API API from AWS CodeBuild — 1 operation(s) for aws codebuild #x amz target=codebuild…
+- [AWS CodeBuild AWS CodeBuild #X Amz Target=CodeBuild… API](https://apis.io/apis/aws-codebuild/aws-codebuild-aws-codebuild-x-amz-target-codebuild-api/) — The AWS CodeBuild #X Amz Target=CodeBuild… API from AWS CodeBuild — 38 operation(s) for aws codebuild #x amz target=codebuild….
+- [AWS CodeBuild Builds API](https://apis.io/apis/aws-codebuild/aws-codebuild-builds-api/) — Operations for starting, stopping, and viewing builds
+- [AWS CodeBuild Projects API](https://apis.io/apis/aws-codebuild/aws-codebuild-projects-api/) — Operations for creating and managing build projects
+- [AWS CodeBuild Codebuild Command Execution API](https://apis.io/apis/aws-codebuild/aws-codebuild-command-execution-api/) — The Codebuild Command Execution API from AWS CodeBuild — 3 operation(s) for codebuild command execution.
+- [AWS CodeBuild Codebuild Fleet API](https://apis.io/apis/aws-codebuild/aws-codebuild-fleet-api/) — The Codebuild Fleet API from AWS CodeBuild — 5 operation(s) for codebuild fleet.
+- [AWS CodeBuild Codebuild Sandboxe API](https://apis.io/apis/aws-codebuild/aws-codebuild-sandboxe-api/) — The Codebuild Sandboxe API from AWS CodeBuild — 3 operation(s) for codebuild sandboxe.
 
-## Timestamps
+### Published properties
 
-- **Created:** 2026-05-11
-- **Modified:** 2026-05-11
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### Agentic access (1)
 
-### AWS CodeBuild API
+Which operations an agent can call, which act, and which need a human in the loop.
 
-Programmatic interface for managing CodeBuild projects, build runs, reports, source credentials, and webhooks. Requests are signed with AWS Signature Version 4 and sent to regional CodeBuild endpoints (codebuild.<region>.amazonaws.com).
+- [Aws Codebuild Agentic Access](https://apis.io/agentic-access/aws-codebuild/aws-codebuild-agentic-access/)
 
-- **Human URL:** [https://docs.aws.amazon.com/codebuild/latest/APIReference/Welcome.html](https://docs.aws.amazon.com/codebuild/latest/APIReference/Welcome.html)
-- **Base URL:** `https://codebuild.us-east-1.amazonaws.com`
+#### Collections (2)
 
-#### Tags
+Postman and Open Collection request collections.
 
-- AWS
-- Build
-- CI/CD
-- Continuous Integration
-- DevOps
+- [AWS CodeBuild API](https://apis.io/collections/aws-codebuild/open-aws-codebuild/)
+- [AWS CodeBuild AWS CodeBuild API API](https://apis.io/collections/aws-codebuild/open-aws-codebuild-aws-codebuild-api-api/)
 
-#### Properties
+#### Security (4)
 
-- [Documentation](https://docs.aws.amazon.com/codebuild/latest/APIReference/Welcome.html)
-- [User  Guide](https://docs.aws.amazon.com/codebuild/latest/userguide/welcome.html)
-- [OpenAPI](openapi/aws-codebuild-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/aws-codebuild.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/aws-codebuild.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Getting Started](https://docs.aws.amazon.com/codebuild/latest/userguide/getting-started.html)
+Authentication, trust centre, and vulnerability disclosure.
 
-## Common Properties
+- [Aws Codebuild Authentication](https://apis.io/security/aws-codebuild/aws-codebuild-authentication/)
+- [Aws Codebuild Domain Security](https://apis.io/security/aws-codebuild/aws-codebuild-domain-security/)
+- [Aws Codebuild Trust Center](https://apis.io/security/aws-codebuild/aws-codebuild-trust-center/)
+- [Aws Codebuild Vulnerability Disclosure](https://apis.io/security/aws-codebuild/aws-codebuild-vulnerability-disclosure/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://aws.amazon.com/codebuild/)
 - [Documentation](https://docs.aws.amazon.com/codebuild/)
-- [API Reference](https://docs.aws.amazon.com/codebuild/latest/APIReference/Welcome.html)
+- [API reference](https://docs.aws.amazon.com/codebuild/latest/APIReference/Welcome.html)
 - [Pricing](https://aws.amazon.com/codebuild/pricing/)
-- [Authentication](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_sigv.html)
-- [Endpoints](https://docs.aws.amazon.com/general/latest/gr/codebuild.html)
-- [C L I](https://docs.aws.amazon.com/cli/latest/reference/codebuild/)
-- [S D Ks](https://aws.amazon.com/tools/)
-- [GitHub Organization](https://github.com/aws)
 - [Support](https://aws.amazon.com/premiumsupport/)
-- [Status Page](https://health.aws.amazon.com/health/status)
+- [GitHub](https://github.com/aws)
+- [Status](https://health.aws.amazon.com/health/status)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 41.2** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 71.4 |
+| Contract quality | 57.2 |
+| Contract governance | 0.0 |
+| Operational transparency | 28.9 |
+| Developer ergonomics | 59.5 |
+| Access clarity | 18.4 |
+
+**Agent readiness 29.6** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | — |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 22.5** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/aws-codebuild/](https://apis.io/providers/aws-codebuild/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for AWS CodeBuild: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/aws-codebuild/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
